@@ -60,7 +60,7 @@ class ReviewController extends Controller
 
         $penugasan->load(['satker', 'periode']);
 
-        $submission = LkjSubmission::with('dokumens')
+        $submission = LkjSubmission::with(['dokumens', 'beritaAcara'])
             ->where('periode_id', $penugasan->periode_id)
             ->where('satker_id', $penugasan->satker_id)
             ->first();
@@ -96,6 +96,8 @@ class ReviewController extends Controller
 
         $totalPoin = $submission ? $this->progress->totalPoin($submission) : 0;
         $persentase = $submission ? $this->progress->persentase($submission) : 0;
+        $beritaAcara = $submission?->beritaAcara;
+        $isSelesai = $submission?->status_keseluruhan === 'selesai';
 
         return view('monev.review.show', compact(
             'penugasan',
@@ -107,7 +109,9 @@ class ReviewController extends Controller
             'hasilReviews',
             'capaianKinerjas',
             'totalPoin',
-            'persentase'
+            'persentase',
+            'beritaAcara',
+            'isSelesai'
         ));
     }
 

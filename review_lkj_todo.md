@@ -66,11 +66,11 @@
 - [x] Implementasi logika Upload Revisi (V2, V3, dst): Simpan file PDF/DOCX yang baru di storage, insert record baru ke `lkj_dokumens` dengan nomor versi di-increment (+1). Ubah status `lkj_submissions` kembali menjadi `proses_review`.
 
 ## Fase 11: Finalisasi & Generate Berita Acara
-- [ ] Buat file migrasi dan model untuk `berita_acaras` (id, lkj_submission_id, file_word_path, file_pdf_path, diupload_oleh).
-- [ ] Buat logika validasi pada halaman Monev: Tombol "Tandai Selesai" HANYA bisa diklik (tidak disabled) jika persentase Progress = 100%.
-- [ ] Buat Controller Method untuk menangani "Tandai Selesai": Update `lkj_submissions.tanggal_selesai` menjadi current timestamp dan status menjadi `selesai`.
-- [ ] Buat fitur Generate BA: Gunakan library PHPWord untuk membuka template `.docx`, ubah variabel teks (`[Nama Satker]`, `[Tanggal]`, dll), simpan file output ke storage, dan catat path-nya di `berita_acaras.file_word_path`. Sediakan tombol Download file tersebut di UI Monev.
-- [ ] Buat form (UI & Controller) bagi Tim Monev untuk mengunggah file hasil scan Berita Acara fisik (.pdf) dan catat di `berita_acaras.file_pdf_path`.
+- [x] Buat file migrasi dan model untuk `berita_acaras` (id, lkj_submission_id, file_word_path, file_pdf_path, diupload_oleh).
+- [x] Buat logika validasi pada halaman Monev: Tombol "Tandai Selesai" HANYA bisa diklik (tidak disabled) jika persentase Progress = 100%.
+- [x] Buat Controller Method untuk menangani "Tandai Selesai": Update `lkj_submissions.tanggal_selesai` menjadi current timestamp dan status menjadi `selesai`.
+- [x] Buat fitur Generate BA: Gunakan library PHPWord untuk membuka template `.docx`, ubah variabel teks (`[Nama Satker]`, `[Tanggal]`, dll), simpan file output ke storage, dan catat path-nya di `berita_acaras.file_word_path`. Sediakan tombol Download file tersebut di UI Monev.
+- [x] Buat form (UI & Controller) bagi Tim Monev untuk mengunggah file hasil scan Berita Acara fisik (.pdf) dan catat di `berita_acaras.file_pdf_path`.
 
 ## Fase 12: Dashboard Global (Admin) & Polishing Akhir
 - [ ] Buat file migrasi dan model untuk `notifications` (log in-app notifications).

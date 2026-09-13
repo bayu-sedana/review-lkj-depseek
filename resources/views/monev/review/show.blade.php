@@ -36,6 +36,83 @@
                         Total Poin: {{ $totalPoin }} (8 + 8 × jumlah indikator)
                     </p>
                 </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-100">
+                    <div class="flex flex-wrap items-center gap-3">
+                        @if ($isSelesai)
+                            <span class="inline-flex items-center rounded-md bg-green-100 px-3 py-1.5 text-sm font-medium text-green-800">
+                                Review Selesai
+                                @if ($submission->tanggal_selesai)
+                                    — {{ $submission->tanggal_selesai->format('d M Y H:i') }}
+                                @endif
+                            </span>
+                        @else
+                            <form method="POST" action="{{ route('monev.review.selesai', $penugasan) }}">
+                                @csrf
+                                <button type="submit"
+                                        @disabled($persentase < 100)
+                                        class="inline-flex items-center rounded-md px-4 py-2 text-sm font-medium text-white
+                                               {{ $persentase < 100 ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-600 hover:bg-green-700' }}">
+                                    Tandai Selesai
+                                </button>
+                            </form>
+
+                            @if ($persentase < 100)
+                                <span class="text-xs text-gray-500">
+                                    Tombol aktif saat progres mencapai 100%.
+                                </span>
+                            @endif
+                        @endif
+
+                        @if ($isSelesai)
+                            <form method="POST" action="{{ route('monev.review.generate', $penugasan) }}">
+                                @csrf
+                                <button type="submit"
+                                        class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                                    {{ $beritaAcara && $beritaAcara->hasWord() ? 'Generate Ulang BA' : 'Generate Berita Acara' }}
+                                </button>
+                            </form>
+
+                            @if ($beritaAcara && $beritaAcara->hasWord())
+                                <a href="{{ route('monev.review.ba.download', $penugasan) }}"
+                                   class="inline-flex items-center rounded-md bg-gray-800 px-4 py-2 text-sm font-medium text-white hover:bg-gray-900">
+                                    Unduh BA (.docx)
+                                </a>
+                            @endif
+                        @endif
+                    </div>
+
+                    @if ($isSelesai && $beritaAcara && $beritaAcara->hasWord())
+                        <div class="mt-4">
+                            <form method="POST" action="{{ route('monev.review.ba.upload', $penugasan) }}"
+                                  enctype="multipart/form-data" class="flex flex-wrap items-end gap-3">
+                                @csrf
+
+                                <div class="flex-1 min-w-[240px]">
+                                    <label for="file_pdf" class="block text-sm font-medium text-gray-700">
+                                        Unggah BA Hasil Scan (.pdf)
+                                    </label>
+                                    <input id="file_pdf" name="file_pdf" type="file" accept=".pdf"
+                                           class="mt-1 block w-full text-sm text-gray-700">
+                                    @error('file_pdf')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <button type="submit"
+                                        class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                                    Unggah
+                                </button>
+                            </form>
+
+                            @if ($beritaAcara->hasPdf())
+                                <p class="mt-2 text-sm text-green-700">
+                                    BA hasil scan sudah diunggah.
+                                </p>
+                            @endif
+                        </div>
+                    @endif
+                </div>
             </div>
 
             @if (! $submission || ! $dokumen)

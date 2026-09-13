@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Monev\BeritaAcaraController;
 use App\Http\Controllers\Monev\HasilReviewController;
 use App\Http\Controllers\Monev\ReviewCapaianKinerjaController;
 use App\Http\Controllers\Monev\ReviewController as MonevReviewController;
@@ -52,6 +53,11 @@ Route::middleware(['auth', 'role:monev'])
         Route::post('review/{penugasan}/aspek1', [HasilReviewController::class, 'storeAspek1'])->name('review.aspek1');
         Route::post('review/{penugasan}/aspek2', [ReviewCapaianKinerjaController::class, 'storeAspek2'])->name('review.aspek2');
         Route::post('review/{penugasan}/aspek3', [HasilReviewController::class, 'storeAspek3'])->name('review.aspek3');
+
+        Route::post('review/{penugasan}/selesai', [BeritaAcaraController::class, 'tandaiSelesai'])->name('review.selesai');
+        Route::post('review/{penugasan}/generate-ba', [BeritaAcaraController::class, 'generate'])->name('review.generate');
+        Route::get('review/{penugasan}/ba/download', [BeritaAcaraController::class, 'downloadWord'])->name('review.ba.download');
+        Route::post('review/{penugasan}/ba/upload', [BeritaAcaraController::class, 'uploadPdf'])->name('review.ba.upload');
     });
 
 Route::middleware(['auth', 'role:satker'])

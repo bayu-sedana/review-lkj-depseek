@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LkjSubmission extends Model
 {
@@ -57,6 +58,14 @@ class LkjSubmission extends Model
     public function dokumens(): HasMany
     {
         return $this->hasMany(LkjDokumen::class)->orderBy('versi');
+    }
+
+    /**
+     * Get the berita acara for this submission.
+     */
+    public function beritaAcara(): HasOne
+    {
+        return $this->hasOne(BeritaAcara::class);
     }
 
     /**

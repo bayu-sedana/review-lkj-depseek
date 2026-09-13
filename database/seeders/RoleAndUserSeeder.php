@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Satker;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -18,6 +19,11 @@ class RoleAndUserSeeder extends Seeder
             Role::firstOrCreate(['name' => $role, 'guard_name' => 'web']);
         }
 
+        $satker = Satker::firstOrCreate(
+            ['kode_satker' => '0001'],
+            ['nama_satker' => 'Satker Contoh']
+        );
+
         $admin = User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
@@ -26,7 +32,27 @@ class RoleAndUserSeeder extends Seeder
                 'role' => 'admin',
             ]
         );
-
         $admin->syncRoles(['admin']);
+
+        $monev = User::firstOrCreate(
+            ['email' => 'monev@example.com'],
+            [
+                'name' => 'Tim Monev',
+                'password' => Hash::make('password'),
+                'role' => 'monev',
+            ]
+        );
+        $monev->syncRoles(['monev']);
+
+        $satkerUser = User::firstOrCreate(
+            ['email' => 'satker@example.com'],
+            [
+                'name' => 'Operator Satker',
+                'password' => Hash::make('password'),
+                'role' => 'satker',
+                'satker_id' => $satker->id,
+            ]
+        );
+        $satkerUser->syncRoles(['satker']);
     }
 }

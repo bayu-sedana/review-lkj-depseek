@@ -56,6 +56,11 @@
                class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('satker.sasaran.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
                 Target Kinerja
             </a>
+
+            <a href="{{ route('satker.lkj.index') }}"
+               class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('satker.lkj.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
+                Upload LKj
+            </a>
         @endif
     </nav>
 </aside>

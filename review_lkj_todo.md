@@ -37,10 +37,10 @@
 - [x] Buat Form Input (UI & Controller) bagi Operator Satker untuk menambah `indikator_kinerjas` di bawah setiap sasaran kegiatan.
 
 ## Fase 6: Modul Satker - Upload LKj (Versioning V1)
-- [ ] Buat file migrasi dan model untuk `lkj_submissions` (id, periode_id, satker_id, status_keseluruhan, tanggal_selesai).
-- [ ] Buat file migrasi dan model untuk `lkj_dokumens` (id, lkj_submission_id, versi, file_path, diupload_oleh).
-- [ ] Definisikan relasi Eloquent terkait transaksi submission dan dokumen LKj.
-- [ ] Buat fitur Upload Dokumen (UI & Logic) untuk Operator Satker: Jika belum pernah upload, buat record di `lkj_submissions` (status: proses_review) dan simpan file fisik di storage, catat di `lkj_dokumens` sebagai `versi = 1`.
+- [x] Buat file migrasi dan model untuk `lkj_submissions` (id, periode_id, satker_id, status_keseluruhan, tanggal_selesai).
+- [x] Buat file migrasi dan model untuk `lkj_dokumens` (id, lkj_submission_id, versi, file_path, diupload_oleh).
+- [x] Definisikan relasi Eloquent terkait transaksi submission dan dokumen LKj.
+- [x] Buat fitur Upload Dokumen (UI & Logic) untuk Operator Satker: Jika belum pernah upload, buat record di `lkj_submissions` (status: proses_review) dan simpan file fisik di storage, catat di `lkj_dokumens` sebagai `versi = 1`.
 
 ## Fase 7: Modul Monev - Persiapan Engine Review
 - [ ] Buat Dashboard Tim Monev (UI & Controller) yang menampilkan daftar Satker yang ditugaskan kepada Monev tersebut pada periode aktif (ambil dari `penugasan_monev`).

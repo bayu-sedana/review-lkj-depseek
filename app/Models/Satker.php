@@ -43,4 +43,12 @@ class Satker extends Model
     {
         return $this->hasMany(SasaranKegiatan::class);
     }
+
+    /**
+     * Get the LKj submissions for this satker.
+     */
+    public function lkjSubmissions(): HasMany
+    {
+        return $this->hasMany(LkjSubmission::class);
+    }
 }

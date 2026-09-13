@@ -53,6 +53,14 @@ class PeriodeReview extends Model
     }
 
     /**
+     * Get the LKj submissions for this period.
+     */
+    public function lkjSubmissions(): HasMany
+    {
+        return $this->hasMany(LkjSubmission::class, 'periode_id');
+    }
+
+    /**
      * Determine whether this period is currently active.
      */
     public function isAktif(): bool

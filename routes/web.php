@@ -4,6 +4,7 @@ use App\Http\Controllers\PenugasanMonevController;
 use App\Http\Controllers\PeriodeReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Satker\IndikatorKinerjaController;
+use App\Http\Controllers\Satker\LkjSubmissionController;
 use App\Http\Controllers\Satker\SasaranKegiatanController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\UserController;
@@ -50,6 +51,10 @@ Route::middleware(['auth', 'role:satker'])
         Route::post('sasaran/{sasaran}/indikator', [IndikatorKinerjaController::class, 'store'])->name('indikator.store');
         Route::put('indikator/{indikator}', [IndikatorKinerjaController::class, 'update'])->name('indikator.update');
         Route::delete('indikator/{indikator}', [IndikatorKinerjaController::class, 'destroy'])->name('indikator.destroy');
+
+        Route::get('lkj', [LkjSubmissionController::class, 'index'])->name('lkj.index');
+        Route::post('lkj', [LkjSubmissionController::class, 'store'])->name('lkj.store');
+        Route::get('lkj/dokumen/{dokumen}/download', [LkjSubmissionController::class, 'download'])->name('lkj.download');
     });
 
 require __DIR__.'/auth.php';

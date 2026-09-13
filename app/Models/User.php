@@ -53,6 +53,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Determine whether the user has the given role.
+     */
+    public function hasRoleName(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    /**
      * Get the satker that the user belongs to.
      */
     public function satker(): BelongsTo

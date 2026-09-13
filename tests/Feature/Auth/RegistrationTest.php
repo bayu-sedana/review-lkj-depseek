@@ -28,4 +28,19 @@ class RegistrationTest extends TestCase
         $this->assertAuthenticated();
         $response->assertRedirect(route('dashboard', absolute: false));
     }
+
+    public function test_registered_users_default_to_satker_role(): void
+    {
+        $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+            'role' => 'satker',
+        ]);
+    }
 }

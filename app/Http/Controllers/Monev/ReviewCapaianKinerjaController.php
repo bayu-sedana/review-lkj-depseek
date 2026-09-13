@@ -6,12 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\LkjSubmission;
 use App\Models\PenugasanMonev;
 use App\Models\ReviewCapaianKinerja;
+use App\Services\RevisionNotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ReviewCapaianKinerjaController extends Controller
 {
+    public function __construct(private readonly RevisionNotificationService $revision)
+    {
+    }
     /**
      * Save the Aspek 2 (Capaian Kinerja) reviews for a submission.
      */
@@ -69,6 +73,8 @@ class ReviewCapaianKinerjaController extends Controller
                 );
             }
         });
+
+        $this->revision->evaluate($submission);
 
         return back()->with('success', 'Review Aspek 2 berhasil disimpan.');
     }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Satker;
 
 use App\Http\Controllers\Controller;
+use App\Models\HasilReview;
 use App\Models\LkjSubmission;
 use App\Models\PeriodeReview;
+use App\Models\ReviewCapaianKinerja;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -60,6 +62,12 @@ class LkjSubmissionController extends Controller
             ]
         );
 
+        if (! $this->semuaSudahDitanggapi($submission)) {
+            return redirect()
+                ->route('satker.revisi.index')
+                ->with('error', 'Anda harus mengisi seluruh tanggapan perbaikan sebelum mengunggah dokumen revisi.');
+        }
+
         $versi = $submission->versiBerikutnya();
 
         $file = $validated['file'];
@@ -82,13 +90,46 @@ class LkjSubmissionController extends Controller
             'diupload_oleh' => $request->user()->id,
         ]);
 
-        if ($submission->status_keseluruhan === 'belum_upload') {
-            $submission->update(['status_keseluruhan' => 'proses_review']);
-        }
+        $submission->update(['status_keseluruhan' => 'proses_review']);
 
         return redirect()
             ->route('satker.lkj.index')
             ->with('success', "Dokumen LKj versi {$versi} berhasil diunggah.");
+    }
+
+    /**
+     * Determine whether all revision items have been responded to by the satker.
+     */
+    private function semuaSudahDitanggapi(LkjSubmission $submission): bool
+    {
+        $dokumen = $submission->dokumenTerakhir();
+
+        if (! $dokumen) {
+            return true;
+        }
+
+        $belumDitanggapiHasil = HasilReview::where('lkj_dokumen_id', $dokumen->id)
+            ->where('status', 'Belum Sesuai')
+            ->where(function ($query) {
+                $query->whereNull('tanggapan_perbaikan_satker')
+                    ->orWhere('tanggapan_perbaikan_satker', '');
+            })
+            ->exists();
+
+        if ($belumDitanggapiHasil) {
+            return false;
+        }
+
+        $belumDitanggapiCapaian = ReviewCapaianKinerja::where('lkj_dokumen_id', $dokumen->id)
+            ->where('is_sinkron', false)
+            ->whereNotNull('nilai_exec_summary')
+            ->where(function ($query) {
+                $query->whereNull('tanggapan_perbaikan_satker')
+                    ->orWhere('tanggapan_perbaikan_satker', '');
+            })
+            ->exists();
+
+        return ! $belumDitanggapiCapaian;
     }
 
     /**

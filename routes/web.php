@@ -8,6 +8,7 @@ use App\Http\Controllers\PeriodeReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Satker\IndikatorKinerjaController;
 use App\Http\Controllers\Satker\LkjSubmissionController;
+use App\Http\Controllers\Satker\RevisiController;
 use App\Http\Controllers\Satker\SasaranKegiatanController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\UserController;
@@ -69,6 +70,9 @@ Route::middleware(['auth', 'role:satker'])
         Route::get('lkj', [LkjSubmissionController::class, 'index'])->name('lkj.index');
         Route::post('lkj', [LkjSubmissionController::class, 'store'])->name('lkj.store');
         Route::get('lkj/dokumen/{dokumen}/download', [LkjSubmissionController::class, 'download'])->name('lkj.download');
+
+        Route::get('revisi', [RevisiController::class, 'index'])->name('revisi.index');
+        Route::post('revisi', [RevisiController::class, 'store'])->name('revisi.store');
     });
 
 require __DIR__.'/auth.php';

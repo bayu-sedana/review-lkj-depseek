@@ -7,12 +7,16 @@ use App\Models\HasilReview;
 use App\Models\LkjSubmission;
 use App\Models\PenugasanMonev;
 use App\Models\RubrikReview;
+use App\Services\RevisionNotificationService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HasilReviewController extends Controller
 {
+    public function __construct(private readonly RevisionNotificationService $revision)
+    {
+    }
     /**
      * Save the Aspek 1 (Format Pelaporan) reviews for a submission.
      */
@@ -56,6 +60,8 @@ class HasilReviewController extends Controller
                 );
             }
         });
+
+        $this->revision->evaluate($submission);
 
         return back()->with('success', 'Review Aspek 1 berhasil disimpan.');
     }
@@ -104,6 +110,8 @@ class HasilReviewController extends Controller
                 );
             }
         });
+
+        $this->revision->evaluate($submission);
 
         return back()->with('success', 'Review Aspek 3 berhasil disimpan.');
     }

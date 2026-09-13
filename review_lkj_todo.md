@@ -59,11 +59,11 @@
 - [x] Buat route dan controller untuk menyimpan data inputan Aspek 2 ke tabel `review_capaian_kinerjas`.
 
 ## Fase 10: Sistem Revisi & Notifikasi Email
-- [ ] Buat class Mailable Laravel (misal: `RevisionNotificationMail`) yang mendefinisikan template email pemberitahuan revisi.
-- [ ] Integrasikan pengiriman email: Saat Tim Monev menyimpan review (Aspek 1, 2, atau 3) yang mengandung status "Belum/Tidak Sinkron", ubah status `lkj_submissions` menjadi `perlu_revisi` dan kirim email ke Operator Satker bersangkutan.
-- [ ] Buat antarmuka (UI) khusus bagi Operator Satker untuk melihat daftar item yang "Perlu Perbaikan" (menggabungkan catatan dari Aspek 1, 2, dan 3).
-- [ ] Wajibkan Operator Satker untuk mengisi input form `tanggapan_perbaikan_satker` pada setiap catatan perbaikan tersebut sebelum mengaktifkan tombol Upload Revisi.
-- [ ] Implementasi logika Upload Revisi (V2, V3, dst): Simpan file PDF/DOCX yang baru di storage, insert record baru ke `lkj_dokumens` dengan nomor versi di-increment (+1). Ubah status `lkj_submissions` kembali menjadi `proses_review`.
+- [x] Buat class Mailable Laravel (misal: `RevisionNotificationMail`) yang mendefinisikan template email pemberitahuan revisi.
+- [x] Integrasikan pengiriman email: Saat Tim Monev menyimpan review (Aspek 1, 2, atau 3) yang mengandung status "Belum/Tidak Sinkron", ubah status `lkj_submissions` menjadi `perlu_revisi` dan kirim email ke Operator Satker bersangkutan.
+- [x] Buat antarmuka (UI) khusus bagi Operator Satker untuk melihat daftar item yang "Perlu Perbaikan" (menggabungkan catatan dari Aspek 1, 2, dan 3).
+- [x] Wajibkan Operator Satker untuk mengisi input form `tanggapan_perbaikan_satker` pada setiap catatan perbaikan tersebut sebelum mengaktifkan tombol Upload Revisi.
+- [x] Implementasi logika Upload Revisi (V2, V3, dst): Simpan file PDF/DOCX yang baru di storage, insert record baru ke `lkj_dokumens` dengan nomor versi di-increment (+1). Ubah status `lkj_submissions` kembali menjadi `proses_review`.
 
 ## Fase 11: Finalisasi & Generate Berita Acara
 - [ ] Buat file migrasi dan model untuk `berita_acaras` (id, lkj_submission_id, file_word_path, file_pdf_path, diupload_oleh).

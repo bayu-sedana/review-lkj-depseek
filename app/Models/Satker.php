@@ -27,4 +27,12 @@ class Satker extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    /**
+     * Get the monev assignments for this satker.
+     */
+    public function penugasanMonev(): HasMany
+    {
+        return $this->hasMany(PenugasanMonev::class);
+    }
 }

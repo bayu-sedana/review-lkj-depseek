@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PenugasanMonevController;
+use App\Http\Controllers\PeriodeReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\UserController;
@@ -25,6 +27,13 @@ Route::middleware(['auth', 'role:admin'])
     ->group(function () {
         Route::resource('satkers', SatkerController::class)->except('show');
         Route::resource('users', UserController::class)->except('show');
+        Route::resource('periodes', PeriodeReviewController::class)
+            ->parameters(['periodes' => 'periode'])
+            ->except('show');
+
+        Route::get('penugasan', [PenugasanMonevController::class, 'index'])->name('penugasan.index');
+        Route::post('penugasan', [PenugasanMonevController::class, 'store'])->name('penugasan.store');
+        Route::delete('penugasan/{penugasan}', [PenugasanMonevController::class, 'destroy'])->name('penugasan.destroy');
     });
 
 require __DIR__.'/auth.php';

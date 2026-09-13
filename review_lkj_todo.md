@@ -22,11 +22,11 @@
 - [x] Terapkan middleware otorisasi (role-based) untuk memproteksi rute Admin, Monev, dan Satker.
 
 ## Fase 4: Modul Admin - Periode & Penugasan
-- [ ] Buat file migrasi dan model untuk `periode_reviews` (id, tahun_lkj, tahun_review, deadline_revisi, status: aktif/ditutup).
-- [ ] Buat file migrasi dan model untuk `penugasan_monev` (id, periode_id, satker_id, monev_user_id).
-- [ ] Buat Route, Controller, dan View (CRUD) untuk `periode_reviews` (Admin).
-- [ ] Buat fitur (UI dan Logika) pada halaman Admin untuk menetapkan penugasan Tim Monev: Memilih periode aktif, memilih Satker, dan menetapkan User (role Monev) ke Satker tersebut.
-- [ ] Definisikan relasi Eloquent untuk `PeriodeReview` dan `PenugasanMonev`.
+- [x] Buat file migrasi dan model untuk `periode_reviews` (id, tahun_lkj, tahun_review, deadline_revisi, status: aktif/ditutup).
+- [x] Buat file migrasi dan model untuk `penugasan_monev` (id, periode_id, satker_id, monev_user_id).
+- [x] Buat Route, Controller, dan View (CRUD) untuk `periode_reviews` (Admin).
+- [x] Buat fitur (UI dan Logika) pada halaman Admin untuk menetapkan penugasan Tim Monev: Memilih periode aktif, memilih Satker, dan menetapkan User (role Monev) ke Satker tersebut.
+- [x] Definisikan relasi Eloquent untuk `PeriodeReview` dan `PenugasanMonev`.
 
 ## Fase 5: Modul Satker - Input Target Kinerja
 - [ ] Buat file migrasi dan model untuk `sasaran_kegiatans` (id, periode_id, satker_id, sasaran_kegiatan).

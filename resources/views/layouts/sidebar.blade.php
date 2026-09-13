@@ -30,6 +30,18 @@
                class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('admin.users.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
                 User
             </a>
+
+            <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500">Periode & Penugasan</p>
+
+            <a href="{{ route('admin.periodes.index') }}"
+               class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('admin.periodes.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
+                Periode Review
+            </a>
+
+            <a href="{{ route('admin.penugasan.index') }}"
+               class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('admin.penugasan.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
+                Penugasan Monev
+            </a>
         @endif
 
         @if ($role === 'monev')

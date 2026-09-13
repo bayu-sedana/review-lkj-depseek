@@ -43,4 +43,16 @@ class RegistrationTest extends TestCase
             'role' => 'satker',
         ]);
     }
+
+    public function test_registered_users_are_authenticated(): void
+    {
+        $this->post('/register', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $this->assertAuthenticated();
+    }
 }

@@ -11,6 +11,17 @@ abstract class TestCase extends BaseTestCase
      */
     protected function setUp(): void
     {
+        // Force the SQLite in-memory connection BEFORE the app boots so that
+        // RefreshDatabase runs migrations against the correct database.
+        putenv('DB_CONNECTION=sqlite');
+        putenv('DB_DATABASE=:memory:');
+
+        $_ENV['DB_CONNECTION'] = 'sqlite';
+        $_ENV['DB_DATABASE'] = ':memory:';
+
+        $_SERVER['DB_CONNECTION'] = 'sqlite';
+        $_SERVER['DB_DATABASE'] = ':memory:';
+
         parent::setUp();
 
         config([

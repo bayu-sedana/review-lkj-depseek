@@ -16,10 +16,10 @@
 - [x] Definisikan relasi Eloquent pada model `User`, `Satker`, dan `RubrikReview`.
 
 ## Fase 3: Modul Admin - Master Data & Autentikasi
-- [ ] Buat layout dashboard dasar (template Blade) dengan navigasi sidebar yang menyesuaikan role pengguna (Admin/Monev/Satker).
-- [ ] Buat Route, Controller, dan View (CRUD) untuk manajemen Master Data `satkers` (Hanya dapat diakses role Admin).
-- [ ] Buat Route, Controller, dan View (CRUD) untuk manajemen `users` (Hanya dapat diakses role Admin). Pada saat create/edit user dengan role 'satker', berikan input pilihan untuk assign `satker_id`.
-- [ ] Terapkan middleware otorisasi (role-based) untuk memproteksi rute Admin, Monev, dan Satker.
+- [x] Buat layout dashboard dasar (template Blade) dengan navigasi sidebar yang menyesuaikan role pengguna (Admin/Monev/Satker).
+- [x] Buat Route, Controller, dan View (CRUD) untuk manajemen Master Data `satkers` (Hanya dapat diakses role Admin).
+- [x] Buat Route, Controller, dan View (CRUD) untuk manajemen `users` (Hanya dapat diakses role Admin). Pada saat create/edit user dengan role 'satker', berikan input pilihan untuk assign `satker_id`.
+- [x] Terapkan middleware otorisasi (role-based) untuk memproteksi rute Admin, Monev, dan Satker.
 
 ## Fase 4: Modul Admin - Periode & Penugasan
 - [ ] Buat file migrasi dan model untuk `periode_reviews` (id, tahun_lkj, tahun_review, deadline_revisi, status: aktif/ditutup).

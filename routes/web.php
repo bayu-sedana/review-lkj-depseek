@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Monev\HasilReviewController;
+use App\Http\Controllers\Monev\ReviewController as MonevReviewController;
 use App\Http\Controllers\PenugasanMonevController;
 use App\Http\Controllers\PeriodeReviewController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +39,16 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('penugasan', [PenugasanMonevController::class, 'index'])->name('penugasan.index');
         Route::post('penugasan', [PenugasanMonevController::class, 'store'])->name('penugasan.store');
         Route::delete('penugasan/{penugasan}', [PenugasanMonevController::class, 'destroy'])->name('penugasan.destroy');
+    });
+
+Route::middleware(['auth', 'role:monev'])
+    ->prefix('monev')
+    ->name('monev.')
+    ->group(function () {
+        Route::get('dashboard', [MonevReviewController::class, 'index'])->name('dashboard');
+        Route::get('review/{penugasan}', [MonevReviewController::class, 'show'])->name('review.show');
+        Route::post('review/{penugasan}/aspek1', [HasilReviewController::class, 'storeAspek1'])->name('review.aspek1');
+        Route::post('review/{penugasan}/aspek3', [HasilReviewController::class, 'storeAspek3'])->name('review.aspek3');
     });
 
 Route::middleware(['auth', 'role:satker'])

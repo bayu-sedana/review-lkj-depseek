@@ -10,8 +10,9 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->withoutMiddleware(
-            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class
-        );
+        $this->withoutMiddleware([
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
+            \Illuminate\Session\Middleware\AuthenticateSession::class,
+        ]);
     }
 }

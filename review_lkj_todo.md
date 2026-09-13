@@ -43,14 +43,14 @@
 - [x] Buat fitur Upload Dokumen (UI & Logic) untuk Operator Satker: Jika belum pernah upload, buat record di `lkj_submissions` (status: proses_review) dan simpan file fisik di storage, catat di `lkj_dokumens` sebagai `versi = 1`.
 
 ## Fase 7: Modul Monev - Persiapan Engine Review
-- [ ] Buat Dashboard Tim Monev (UI & Controller) yang menampilkan daftar Satker yang ditugaskan kepada Monev tersebut pada periode aktif (ambil dari `penugasan_monev`).
-- [ ] Buat Layout halaman "Detail Review" untuk Satker yang dipilih, lengkapi dengan UI 3 Tab: "Aspek 1: Format", "Aspek 2: Capaian", dan "Aspek 3: Pengungkapan".
-- [ ] Buat Service/Helper (Backend) untuk menghitung kalkulasi persentase progress dinamis (Total Poin = 8 + (8 x Jumlah Indikator)). Tampilkan progress bar pada halaman detail review ini.
+- [x] Buat Dashboard Tim Monev (UI & Controller) yang menampilkan daftar Satker yang ditugaskan kepada Monev tersebut pada periode aktif (ambil dari `penugasan_monev`).
+- [x] Buat Layout halaman "Detail Review" untuk Satker yang dipilih, lengkapi dengan UI 3 Tab: "Aspek 1: Format", "Aspek 2: Capaian", dan "Aspek 3: Pengungkapan".
+- [x] Buat Service/Helper (Backend) untuk menghitung kalkulasi persentase progress dinamis (Total Poin = 8 + (8 x Jumlah Indikator)). Tampilkan progress bar pada halaman detail review ini.
 
 ## Fase 8: Modul Monev - Engine Review Aspek 1 & 3
-- [ ] Buat file migrasi dan model untuk `hasil_reviews` (id, lkj_dokumen_id, rubrik_id, indikator_kinerja_id [nullable], uraian, status, catatan_perbaikan, tanggapan_satker, direview_oleh).
-- [ ] Implementasi Tab Aspek 1 (UI & Controller): Tampilkan 8 form evaluasi (berdasarkan data `rubrik_reviews` per_dokumen). Sediakan input radio Sesuai/Belum dan textarea Catatan (wajib jika Belum). Simpan data ke `hasil_reviews`.
-- [ ] Implementasi Tab Aspek 3 (UI & Controller): Tampilkan daftar Indikator Kinerja Satker. Di dalam tiap indikator, tampilkan 7 form evaluasi (berdasarkan data `rubrik_reviews` per_indikator). Simpan data ke `hasil_reviews` (sertakan `indikator_kinerja_id`).
+- [x] Buat file migrasi dan model untuk `hasil_reviews` (id, lkj_dokumen_id, rubrik_id, indikator_kinerja_id [nullable], uraian, status, catatan_perbaikan, tanggapan_satker, direview_oleh).
+- [x] Implementasi Tab Aspek 1 (UI & Controller): Tampilkan 8 form evaluasi (berdasarkan data `rubrik_reviews` per_dokumen). Sediakan input radio Sesuai/Belum dan textarea Catatan (wajib jika Belum). Simpan data ke `hasil_reviews`.
+- [x] Implementasi Tab Aspek 3 (UI & Controller): Tampilkan daftar Indikator Kinerja Satker. Di dalam tiap indikator, tampilkan 7 form evaluasi (berdasarkan data `rubrik_reviews` per_indikator). Simpan data ke `hasil_reviews` (sertakan `indikator_kinerja_id`).
 
 ## Fase 9: Modul Monev - Engine Review Aspek 2 (Auto-Compare)
 - [ ] Buat file migrasi dan model untuk `review_capaian_kinerjas` (id, lkj_dokumen_id, indikator_kinerja_id, nilai_exec, nilai_bab3, nilai_bab4, nilai_aplikasi, nilai_datadukung, is_sinkron, catatan_perbaikan, tanggapan_satker, direview_oleh).

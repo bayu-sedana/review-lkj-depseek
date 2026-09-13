@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Mail\RevisionNotificationMail;
 use App\Models\HasilReview;
 use App\Models\LkjSubmission;
+use App\Models\Notification;
 use App\Models\ReviewCapaianKinerja;
 use Illuminate\Support\Facades\Mail;
 
@@ -63,7 +64,23 @@ class RevisionNotificationService
             ->where('role', 'satker')
             ->get() ?? collect();
 
+        $title = 'Revisi LKj Diperlukan';
+        $message = sprintf(
+            'Terdapat %d item yang perlu diperbaiki pada LKj %s periode %s/%s. Silakan lengkapi tanggapan perbaikan dan unggah dokumen revisi.',
+            $jumlahPerbaikan,
+            $submission->satker->nama_satker ?? '-',
+            $submission->periode->tahun_lkj ?? '-',
+            $submission->periode->tahun_review ?? '-'
+        );
+
         foreach ($operators as $operator) {
+            Notification::create([
+                'user_id' => $operator->id,
+                'title' => $title,
+                'message' => $message,
+                'is_read' => false,
+            ]);
+
             Mail::to($operator->email)->send(
                 new RevisionNotificationMail($submission, $jumlahPerbaikan)
             );

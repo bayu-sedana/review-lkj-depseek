@@ -29,12 +29,12 @@
 - [x] Definisikan relasi Eloquent untuk `PeriodeReview` dan `PenugasanMonev`.
 
 ## Fase 5: Modul Satker - Input Target Kinerja
-- [ ] Buat file migrasi dan model untuk `sasaran_kegiatans` (id, periode_id, satker_id, sasaran_kegiatan).
-- [ ] Buat file migrasi dan model untuk `indikator_kinerjas` (id, sasaran_kegiatan_id, indikator_kinerja).
-- [ ] Definisikan relasi Eloquent (`SasaranKegiatan` hasMany `IndikatorKinerja`).
-- [ ] Buat halaman Dashboard Satker yang menampilkan periode review yang sedang aktif.
-- [ ] Buat Form Input (UI & Controller) bagi Operator Satker untuk menambah/mengedit `sasaran_kegiatans` milik satker-nya pada periode aktif.
-- [ ] Buat Form Input (UI & Controller) bagi Operator Satker untuk menambah `indikator_kinerjas` di bawah setiap sasaran kegiatan.
+- [x] Buat file migrasi dan model untuk `sasaran_kegiatans` (id, periode_id, satker_id, sasaran_kegiatan).
+- [x] Buat file migrasi dan model untuk `indikator_kinerjas` (id, sasaran_kegiatan_id, indikator_kinerja).
+- [x] Definisikan relasi Eloquent (`SasaranKegiatan` hasMany `IndikatorKinerja`).
+- [x] Buat halaman Dashboard Satker yang menampilkan periode review yang sedang aktif.
+- [x] Buat Form Input (UI & Controller) bagi Operator Satker untuk menambah/mengedit `sasaran_kegiatans` milik satker-nya pada periode aktif.
+- [x] Buat Form Input (UI & Controller) bagi Operator Satker untuk menambah `indikator_kinerjas` di bawah setiap sasaran kegiatan.
 
 ## Fase 6: Modul Satker - Upload LKj (Versioning V1)
 - [ ] Buat file migrasi dan model untuk `lkj_submissions` (id, periode_id, satker_id, status_keseluruhan, tanggal_selesai).

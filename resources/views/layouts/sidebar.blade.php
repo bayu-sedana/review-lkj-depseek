@@ -51,7 +51,11 @@
 
         @if ($role === 'satker')
             <p class="px-3 pt-4 pb-1 text-xs uppercase tracking-wider text-gray-500">Satker</p>
-            <span class="block px-3 py-2 text-gray-500 italic">Belum tersedia</span>
+
+            <a href="{{ route('satker.sasaran.index') }}"
+               class="block rounded-md px-3 py-2 hover:bg-gray-800 {{ request()->routeIs('satker.sasaran.*') ? 'bg-gray-800 text-white' : 'text-gray-300' }}">
+                Target Kinerja
+            </a>
         @endif
     </nav>
 </aside>

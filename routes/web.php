@@ -3,6 +3,8 @@
 use App\Http\Controllers\PenugasanMonevController;
 use App\Http\Controllers\PeriodeReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Satker\IndikatorKinerjaController;
+use App\Http\Controllers\Satker\SasaranKegiatanController;
 use App\Http\Controllers\SatkerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +36,20 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('penugasan', [PenugasanMonevController::class, 'index'])->name('penugasan.index');
         Route::post('penugasan', [PenugasanMonevController::class, 'store'])->name('penugasan.store');
         Route::delete('penugasan/{penugasan}', [PenugasanMonevController::class, 'destroy'])->name('penugasan.destroy');
+    });
+
+Route::middleware(['auth', 'role:satker'])
+    ->prefix('satker')
+    ->name('satker.')
+    ->group(function () {
+        Route::get('sasaran', [SasaranKegiatanController::class, 'index'])->name('sasaran.index');
+        Route::post('sasaran', [SasaranKegiatanController::class, 'store'])->name('sasaran.store');
+        Route::put('sasaran/{sasaran}', [SasaranKegiatanController::class, 'update'])->name('sasaran.update');
+        Route::delete('sasaran/{sasaran}', [SasaranKegiatanController::class, 'destroy'])->name('sasaran.destroy');
+
+        Route::post('sasaran/{sasaran}/indikator', [IndikatorKinerjaController::class, 'store'])->name('indikator.store');
+        Route::put('indikator/{indikator}', [IndikatorKinerjaController::class, 'update'])->name('indikator.update');
+        Route::delete('indikator/{indikator}', [IndikatorKinerjaController::class, 'destroy'])->name('indikator.destroy');
     });
 
 require __DIR__.'/auth.php';

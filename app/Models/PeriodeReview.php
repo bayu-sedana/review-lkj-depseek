@@ -45,6 +45,14 @@ class PeriodeReview extends Model
     }
 
     /**
+     * Get the sasaran kegiatans for this period.
+     */
+    public function sasaranKegiatan(): HasMany
+    {
+        return $this->hasMany(SasaranKegiatan::class, 'periode_id');
+    }
+
+    /**
      * Determine whether this period is currently active.
      */
     public function isAktif(): bool

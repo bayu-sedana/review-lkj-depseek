@@ -35,4 +35,12 @@ class Satker extends Model
     {
         return $this->hasMany(PenugasanMonev::class);
     }
+
+    /**
+     * Get the sasaran kegiatans for this satker.
+     */
+    public function sasaranKegiatan(): HasMany
+    {
+        return $this->hasMany(SasaranKegiatan::class);
+    }
 }

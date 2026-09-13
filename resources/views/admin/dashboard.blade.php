@@ -1,14 +1,14 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Dashboard Tim Monev
+            Dashboard Admin
         </h2>
     </x-slot>
 
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                <form method="GET" action="{{ route('monev.dashboard') }}" class="flex items-end gap-3">
+                <form method="GET" action="{{ route('admin.dashboard') }}" class="flex items-end gap-3">
                     <div class="flex-1">
                         <label for="periode_id" class="block text-sm font-medium text-gray-700">Pilih Periode</label>
                         <select id="periode_id" name="periode_id"
@@ -41,46 +41,58 @@
                 @endif
             </div>
 
-            @if ($selectedPeriode)
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Total Satker</p>
+                    <p class="text-2xl font-semibold text-gray-800">{{ $statistik['total_satker'] }}</p>
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Belum Upload</p>
+                    <p class="text-2xl font-semibold text-gray-800">{{ $statistik['belum_upload'] }}</p>
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Sedang Review</p>
+                    <p class="text-2xl font-semibold text-indigo-600">{{ $statistik['sedang_review'] }}</p>
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Proses Revisi</p>
+                    <p class="text-2xl font-semibold text-amber-600">{{ $statistik['proses_revisi'] }}</p>
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-4">
+                    <p class="text-sm text-gray-500">Selesai</p>
+                    <p class="text-2xl font-semibold text-green-600">{{ $statistik['selesai'] }}</p>
+                </div>
+            </div>
+
+            @if ($isLewatDeadline && $submissionsLewatDeadline->isNotEmpty())
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="px-6 py-4 border-b border-gray-100">
+                        <h3 class="text-base font-semibold text-red-600">
+                            Peringatan: Satker Belum Selesai Melewati Deadline
+                        </h3>
+                    </div>
+
                     <table class="min-w-full divide-y divide-gray-200 text-sm">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th class="px-4 py-3 text-left font-medium text-gray-500">Satker</th>
-                                <th class="px-4 py-3 text-left font-medium text-gray-500">Periode</th>
-                                <th class="px-4 py-3 text-right font-medium text-gray-500">Aksi</th>
+                                <th class="px-4 py-3 text-left font-medium text-gray-500">Status</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            @forelse ($penugasans as $penugasan)
+                            @foreach ($submissionsLewatDeadline as $submission)
                                 <tr>
                                     <td class="px-4 py-3">
-                                        {{ $penugasan->satker->kode_satker ?? '-' }}
-                                        — {{ $penugasan->satker->nama_satker ?? '-' }}
+                                        {{ $submission->satker->kode_satker ?? '-' }}
+                                        — {{ $submission->satker->nama_satker ?? '-' }}
                                     </td>
-                                    <td class="px-4 py-3">
-                                        {{ $penugasan->periode->tahun_lkj ?? '-' }}/{{ $penugasan->periode->tahun_review ?? '-' }}
-                                    </td>
-                                    <td class="px-4 py-3 text-right">
-                                        <a href="{{ route('monev.review.show', $penugasan) }}"
-                                           class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-indigo-700">
-                                            Review
-                                        </a>
+                                    <td class="px-4 py-3 text-red-600 font-medium">
+                                        {{ ucwords(str_replace('_', ' ', $submission->status_keseluruhan)) }}
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="3" class="px-4 py-6 text-center text-gray-500">
-                                        Anda belum ditugaskan untuk Satker manapun pada periode ini.
-                                    </td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
-                </div>
-            @else
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-center text-gray-500">
-                    Belum ada periode review.
                 </div>
             @endif
         </div>

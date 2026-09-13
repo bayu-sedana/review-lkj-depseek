@@ -73,7 +73,7 @@
 - [x] Buat form (UI & Controller) bagi Tim Monev untuk mengunggah file hasil scan Berita Acara fisik (.pdf) dan catat di `berita_acaras.file_pdf_path`.
 
 ## Fase 12: Dashboard Global (Admin) & Polishing Akhir
-- [ ] Buat file migrasi dan model untuk `notifications` (log in-app notifications).
-- [ ] Sempurnakan Dashboard Admin: Tampilkan statistik jumlah Satker yang (Belum Upload, Sedang Review, Proses Revisi, Selesai).
-- [ ] Tambahkan logika peringatan deadline pada Dashboard Admin dan Monev: Bandingkan `date.now()` dengan `periode_reviews.deadline_revisi`. Berikan indikator visual warna merah jika lewat waktu dan belum berstatus selesai.
-- [ ] Lakukan refactoring kode, pengecekan celah keamanan (pastikan Tenant Isolation pada Controller: Satker hanya bisa akses data Satkernya sendiri), dan pastikan UI responsif.
+- [x] Buat file migrasi dan model untuk `notifications` (log in-app notifications).
+- [x] Sempurnakan Dashboard Admin: Tampilkan statistik jumlah Satker yang (Belum Upload, Sedang Review, Proses Revisi, Selesai).
+- [x] Tambahkan logika peringatan deadline pada Dashboard Admin dan Monev: Bandingkan `date.now()` dengan `periode_reviews.deadline_revisi`. Berikan indikator visual warna merah jika lewat waktu dan belum berstatus selesai.
+- [x] Lakukan refactoring kode, pengecekan celah keamanan (pastikan Tenant Isolation pada Controller: Satker hanya bisa akses data Satkernya sendiri), dan pastikan UI responsif.

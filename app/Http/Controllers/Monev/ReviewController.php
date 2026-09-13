@@ -10,14 +10,17 @@ use App\Models\PeriodeReview;
 use App\Models\ReviewCapaianKinerja;
 use App\Models\RubrikReview;
 use App\Models\SasaranKegiatan;
+use App\Services\DashboardStatistikService;
 use App\Services\ReviewProgressService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ReviewController extends Controller
 {
-    public function __construct(private readonly ReviewProgressService $progress)
-    {
+    public function __construct(
+        private readonly ReviewProgressService $progress,
+        private readonly DashboardStatistikService $statistik,
+    ) {
     }
 
     /**
@@ -48,7 +51,14 @@ class ReviewController extends Controller
                 ->get();
         }
 
-        return view('monev.dashboard', compact('periodes', 'selectedPeriode', 'penugasans'));
+        $isLewatDeadline = $this->statistik->isLewatDeadline($selectedPeriode);
+
+        return view('monev.dashboard', compact(
+            'periodes',
+            'selectedPeriode',
+            'penugasans',
+            'isLewatDeadline'
+        ));
     }
 
     /**

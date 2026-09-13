@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Monev\BeritaAcaraController;
 use App\Http\Controllers\Monev\HasilReviewController;
 use App\Http\Controllers\Monev\ReviewCapaianKinerjaController;
@@ -33,6 +34,8 @@ Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
+
         Route::resource('satkers', SatkerController::class)->except('show');
         Route::resource('users', UserController::class)->except('show');
         Route::resource('periodes', PeriodeReviewController::class)

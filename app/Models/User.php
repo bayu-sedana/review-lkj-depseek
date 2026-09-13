@@ -75,4 +75,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(PenugasanMonev::class, 'monev_user_id');
     }
+
+    /**
+     * Get the in-app notifications for this user.
+     */
+    public function appNotifications(): HasMany
+    {
+        return $this->hasMany(Notification::class)->latest();
+    }
 }

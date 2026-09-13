@@ -53,10 +53,10 @@
 - [x] Implementasi Tab Aspek 3 (UI & Controller): Tampilkan daftar Indikator Kinerja Satker. Di dalam tiap indikator, tampilkan 7 form evaluasi (berdasarkan data `rubrik_reviews` per_indikator). Simpan data ke `hasil_reviews` (sertakan `indikator_kinerja_id`).
 
 ## Fase 9: Modul Monev - Engine Review Aspek 2 (Auto-Compare)
-- [ ] Buat file migrasi dan model untuk `review_capaian_kinerjas` (id, lkj_dokumen_id, indikator_kinerja_id, nilai_exec, nilai_bab3, nilai_bab4, nilai_aplikasi, nilai_datadukung, is_sinkron, catatan_perbaikan, tanggapan_satker, direview_oleh).
-- [ ] Implementasi Tab Aspek 2 (UI): Tampilkan daftar Indikator Kinerja. Di bawah setiap indikator, buat 5 input teks (number/decimal) untuk memasukkan nilai capaian.
-- [ ] Tambahkan Vanilla JS / Alpine.js pada UI Aspek 2 untuk logika *real-time auto-compare*: Jika 5 input bernilai sama, set warna indikator menjadi hijau (Sinkron). Jika beda, set merah dan tampilkan textarea "Catatan Perbaikan" sebagai field wajib (required).
-- [ ] Buat route dan controller untuk menyimpan data inputan Aspek 2 ke tabel `review_capaian_kinerjas`.
+- [x] Buat file migrasi dan model untuk `review_capaian_kinerjas` (id, lkj_dokumen_id, indikator_kinerja_id, nilai_exec, nilai_bab3, nilai_bab4, nilai_aplikasi, nilai_datadukung, is_sinkron, catatan_perbaikan, tanggapan_satker, direview_oleh).
+- [x] Implementasi Tab Aspek 2 (UI): Tampilkan daftar Indikator Kinerja. Di bawah setiap indikator, buat 5 input teks (number/decimal) untuk memasukkan nilai capaian.
+- [x] Tambahkan Vanilla JS / Alpine.js pada UI Aspek 2 untuk logika *real-time auto-compare*: Jika 5 input bernilai sama, set warna indikator menjadi hijau (Sinkron). Jika beda, set merah dan tampilkan textarea "Catatan Perbaikan" sebagai field wajib (required).
+- [x] Buat route dan controller untuk menyimpan data inputan Aspek 2 ke tabel `review_capaian_kinerjas`.
 
 ## Fase 10: Sistem Revisi & Notifikasi Email
 - [ ] Buat class Mailable Laravel (misal: `RevisionNotificationMail`) yang mendefinisikan template email pemberitahuan revisi.

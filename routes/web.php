@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Monev\HasilReviewController;
+use App\Http\Controllers\Monev\ReviewCapaianKinerjaController;
 use App\Http\Controllers\Monev\ReviewController as MonevReviewController;
 use App\Http\Controllers\PenugasanMonevController;
 use App\Http\Controllers\PeriodeReviewController;
@@ -48,6 +49,7 @@ Route::middleware(['auth', 'role:monev'])
         Route::get('dashboard', [MonevReviewController::class, 'index'])->name('dashboard');
         Route::get('review/{penugasan}', [MonevReviewController::class, 'show'])->name('review.show');
         Route::post('review/{penugasan}/aspek1', [HasilReviewController::class, 'storeAspek1'])->name('review.aspek1');
+        Route::post('review/{penugasan}/aspek2', [ReviewCapaianKinerjaController::class, 'storeAspek2'])->name('review.aspek2');
         Route::post('review/{penugasan}/aspek3', [HasilReviewController::class, 'storeAspek3'])->name('review.aspek3');
     });
 

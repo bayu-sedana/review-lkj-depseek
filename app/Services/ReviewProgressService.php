@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\HasilReview;
 use App\Models\LkjSubmission;
+use App\Models\ReviewCapaianKinerja;
 use App\Models\SasaranKegiatan;
 
 class ReviewProgressService
@@ -60,7 +61,7 @@ class ReviewProgressService
     }
 
     /**
-     * Count the points already marked as 'Sesuai' for the latest document.
+     * Count the points already marked as 'Sesuai' or 'Sinkron' for the latest document.
      */
     public function poinSesuai(LkjSubmission $submission): int
     {
@@ -70,8 +71,14 @@ class ReviewProgressService
             return 0;
         }
 
-        return HasilReview::where('lkj_dokumen_id', $dokumen->id)
+        $poinAspek1Dan3 = HasilReview::where('lkj_dokumen_id', $dokumen->id)
             ->where('status', 'Sesuai')
             ->count();
+
+        $poinAspek2 = ReviewCapaianKinerja::where('lkj_dokumen_id', $dokumen->id)
+            ->where('is_sinkron', true)
+            ->count();
+
+        return $poinAspek1Dan3 + $poinAspek2;
     }
 }

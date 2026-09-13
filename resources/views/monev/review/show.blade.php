@@ -125,24 +125,103 @@
                         <div x-show="tab === 'aspek2'" x-cloak>
                             <h3 class="text-base font-semibold text-gray-800 mb-4">Aspek 2: Kesesuaian Data Capaian Kinerja</h3>
 
-                            @forelse ($sasarans as $sasaran)
-                                <div class="mb-6">
-                                    <p class="font-medium text-gray-800 mb-2">{{ $sasaran->sasaran_kegiatan }}</p>
+                            <form method="POST" action="{{ route('monev.review.aspek2', $penugasan) }}" class="space-y-6">
+                                @csrf
 
-                                    @forelse ($sasaran->indikatorKinerja as $indikator)
-                                        <div class="border border-gray-200 rounded-md p-4 mb-2">
-                                            <p class="text-sm text-gray-700">{{ $indikator->indikator_kinerja }}</p>
-                                            <p class="text-xs text-gray-400 mt-2 italic">
-                                                Form auto-compare 5 nilai akan tersedia pada Fase 9.
-                                            </p>
-                                        </div>
-                                    @empty
-                                        <p class="text-sm text-gray-400 italic">Belum ada indikator.</p>
-                                    @endforelse
-                                </div>
-                            @empty
-                                <p class="text-sm text-gray-400 italic">Satker belum mengisi sasaran kegiatan.</p>
-                            @endforelse
+                                @php $rowIndex2 = 0; @endphp
+
+                                @forelse ($sasarans as $sasaran)
+                                    <div>
+                                        <p class="font-medium text-gray-800 mb-2">{{ $sasaran->sasaran_kegiatan }}</p>
+
+                                        @forelse ($sasaran->indikatorKinerja as $indikator)
+                                            @php
+                                                $capaian = $capaianKinerjas->get($indikator->id);
+                                                $key = $rowIndex2++;
+                                            @endphp
+                                            <div class="border border-gray-200 rounded-md p-4 mb-3"
+                                                 x-data="{
+                                                    exec: '{{ $capaian->nilai_exec_summary ?? '' }}',
+                                                    bab3: '{{ $capaian->nilai_bab_3 ?? '' }}',
+                                                    bab4: '{{ $capaian->nilai_bab_4 ?? '' }}',
+                                                    aplikasi: '{{ $capaian->nilai_aplikasi_kinerjaku ?? '' }}',
+                                                    dukung: '{{ $capaian->nilai_data_dukung ?? '' }}',
+                                                    get terisi() {
+                                                        return [this.exec, this.bab3, this.bab4, this.aplikasi, this.dukung]
+                                                            .filter(v => v !== '' && v !== null).length;
+                                                    },
+                                                    get sinkron() {
+                                                        if (this.terisi < 5) return false;
+                                                        const vals = [this.exec, this.bab3, this.bab4, this.aplikasi, this.dukung];
+                                                        return vals.every(v => v === vals[0]);
+                                                    }
+                                                 }">
+                                                <input type="hidden" name="reviews[{{ $key }}][indikator_kinerja_id]" value="{{ $indikator->id }}">
+
+                                                <div class="flex items-start justify-between gap-3">
+                                                    <p class="text-sm font-medium text-gray-700">{{ $indikator->indikator_kinerja }}</p>
+
+                                                    <span class="text-xs font-semibold px-2 py-1 rounded"
+                                                          :class="sinkron ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                                                          x-text="sinkron ? 'Sinkron' : 'Belum Sinkron'"></span>
+                                                </div>
+
+                                                <div class="mt-3 grid grid-cols-1 md:grid-cols-5 gap-3">
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-600">Executive Summary</label>
+                                                        <input type="number" step="any" name="reviews[{{ $key }}][nilai_exec_summary]"
+                                                               x-model="exec"
+                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-600">Bab III</label>
+                                                        <input type="number" step="any" name="reviews[{{ $key }}][nilai_bab_3]"
+                                                               x-model="bab3"
+                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-600">Bab IV</label>
+                                                        <input type="number" step="any" name="reviews[{{ $key }}][nilai_bab_4]"
+                                                               x-model="bab4"
+                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-600">Aplikasi Kinerjaku</label>
+                                                        <input type="number" step="any" name="reviews[{{ $key }}][nilai_aplikasi_kinerjaku]"
+                                                               x-model="aplikasi"
+                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                                    </div>
+                                                    <div>
+                                                        <label class="block text-xs font-medium text-gray-600">Data Dukung</label>
+                                                        <input type="number" step="any" name="reviews[{{ $key }}][nilai_data_dukung]"
+                                                               x-model="dukung"
+                                                               class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                                    </div>
+                                                </div>
+
+                                                <div class="mt-3" x-show="! sinkron" x-cloak>
+                                                    <label class="block text-sm font-medium text-gray-700">Catatan untuk Perbaikan</label>
+                                                    <textarea name="reviews[{{ $key }}][catatan_perbaikan]" rows="2"
+                                                              class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $capaian->catatan_perbaikan ?? '' }}</textarea>
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <p class="text-sm text-gray-400 italic">Belum ada indikator.</p>
+                                        @endforelse
+                                    </div>
+                                @empty
+                                    <p class="text-sm text-gray-400 italic">Satker belum mengisi sasaran kegiatan.</p>
+                                @endforelse
+
+                                @if ($sasarans->isNotEmpty())
+                                    <div class="flex justify-end">
+                                        <button type="submit"
+                                                class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                                            Simpan Aspek 2
+                                        </button>
+                                    </div>
+                                @endif
+                            </form>
                         </div>
 
                         {{-- Aspek 3: Pengungkapan Informasi (per indikator) --}}

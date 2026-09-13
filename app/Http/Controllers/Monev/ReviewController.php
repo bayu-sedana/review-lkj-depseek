@@ -7,6 +7,7 @@ use App\Models\HasilReview;
 use App\Models\LkjSubmission;
 use App\Models\PenugasanMonev;
 use App\Models\PeriodeReview;
+use App\Models\ReviewCapaianKinerja;
 use App\Models\RubrikReview;
 use App\Models\SasaranKegiatan;
 use App\Services\ReviewProgressService;
@@ -81,11 +82,16 @@ class ReviewController extends Controller
             ->get();
 
         $hasilReviews = collect();
+        $capaianKinerjas = collect();
 
         if ($dokumen) {
             $hasilReviews = HasilReview::where('lkj_dokumen_id', $dokumen->id)
                 ->get()
                 ->keyBy(fn (HasilReview $item) => $item->rubrik_id.'-'.($item->indikator_kinerja_id ?? 'null'));
+
+            $capaianKinerjas = ReviewCapaianKinerja::where('lkj_dokumen_id', $dokumen->id)
+                ->get()
+                ->keyBy('indikator_kinerja_id');
         }
 
         $totalPoin = $submission ? $this->progress->totalPoin($submission) : 0;
@@ -99,6 +105,7 @@ class ReviewController extends Controller
             'rubrikPengungkapan',
             'sasarans',
             'hasilReviews',
+            'capaianKinerjas',
             'totalPoin',
             'persentase'
         ));

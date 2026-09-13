@@ -49,14 +49,11 @@
                     </a>
                 @endif
             </div>
-            <input
+            <x-password-input
                 id="password"
-                type="password"
                 name="password"
-                required
                 autocomplete="current-password"
-                placeholder="••••••••"
-                class="auth-input block w-full rounded-lg border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 transition"
+                :required="true"
             />
             @error('password')
                 <p class="mt-2 text-xs text-red-600 font-medium">{{ $message }}</p>

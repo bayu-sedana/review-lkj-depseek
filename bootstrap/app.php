@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => EnsureUserHasRole::class,
         ]);
 
-        if (app()->environment('testing')) {
+        if (env('APP_ENV') === 'testing') {
             $middleware->validateCsrfTokens(except: ['*']);
         }
     })

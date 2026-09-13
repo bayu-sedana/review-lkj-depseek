@@ -9,11 +9,11 @@
 - [x] Setup sistem Autentikasi dasar (login/logout) menggunakan Laravel Breeze atau Jetstream (pilih stack Blade/Alpine.js).
 
 ## Fase 2: Migrasi Database & Relasi (Master Data)
-- [ ] Buat file migrasi dan model untuk `satkers` (id, kode_satker, nama_satker).
-- [ ] Ubah migrasi tabel `users`, tambahkan kolom `role` (enum: admin, monev, satker) dan `satker_id` (foreign key ke satkers, nullable).
-- [ ] Buat file migrasi dan model untuk `rubrik_reviews` (id, aspek, tipe_evaluasi, bagian_laporan, minimum_informasi, urutan).
-- [ ] Buat Seeder untuk tabel `roles` (Spatie), akun Admin pertama (Super User), dan data statis panduan di `rubrik_reviews` (untuk Aspek 1 dan Aspek 3).
-- [ ] Definisikan relasi Eloquent pada model `User`, `Satker`, dan `RubrikReview`.
+- [x] Buat file migrasi dan model untuk `satkers` (id, kode_satker, nama_satker).
+- [x] Ubah migrasi tabel `users`, tambahkan kolom `role` (enum: admin, monev, satker) dan `satker_id` (foreign key ke satkers, nullable).
+- [x] Buat file migrasi dan model untuk `rubrik_reviews` (id, aspek, tipe_evaluasi, bagian_laporan, minimum_informasi, urutan).
+- [x] Buat Seeder untuk tabel `roles` (Spatie), akun Admin pertama (Super User), dan data statis panduan di `rubrik_reviews` (untuk Aspek 1 dan Aspek 3).
+- [x] Definisikan relasi Eloquent pada model `User`, `Satker`, dan `RubrikReview`.
 
 ## Fase 3: Modul Admin - Master Data & Autentikasi
 - [ ] Buat layout dashboard dasar (template Blade) dengan navigasi sidebar yang menyesuaikan role pengguna (Admin/Monev/Satker).

@@ -64,6 +64,20 @@
                 </div>
             </div>
 
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <h3 class="text-base font-semibold text-gray-800 mb-4">
+                    Progress Review per Satker
+                </h3>
+
+                @if (count($progressPerSatker['labels']) > 0)
+                    <div class="relative h-80">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                @else
+                    <p class="text-sm text-gray-500">Belum ada submission pada periode ini.</p>
+                @endif
+            </div>
+
             @if ($isLewatDeadline && $submissionsLewatDeadline->isNotEmpty())
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="px-6 py-4 border-b border-gray-100">
@@ -97,4 +111,52 @@
             @endif
         </div>
     </div>
+
+    @if (count($progressPerSatker['labels']) > 0)
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const ctx = document.getElementById('progressChart');
+
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: @json($progressPerSatker['labels']),
+                        datasets: [{
+                            label: 'Progress (%)',
+                            data: @json($progressPerSatker['values']),
+                            backgroundColor: 'rgba(79, 70, 229, 0.7)',
+                            borderColor: 'rgba(79, 70, 229, 1)',
+                            borderWidth: 1,
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                max: 100,
+                                ticks: {
+                                    callback: function (value) {
+                                        return value + '%';
+                                    },
+                                },
+                            },
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function (context) {
+                                        return context.parsed.y + '%';
+                                    },
+                                },
+                            },
+                        },
+                    },
+                });
+            });
+        </script>
+    @endif
 </x-app-layout>

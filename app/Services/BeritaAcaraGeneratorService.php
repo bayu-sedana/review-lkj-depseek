@@ -25,7 +25,7 @@ class BeritaAcaraGeneratorService
 
         if (! file_exists($templatePath)) {
             throw new \RuntimeException(
-                'Template Berita Acara tidak ditemukan di '.self::TEMPLATE_PATH
+                'Template Berita Acara tidak ditemukan di '.$templatePath
             );
         }
 

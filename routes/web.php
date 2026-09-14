@@ -47,6 +47,9 @@ Route::middleware(['auth', 'role:admin'])
         Route::get('penugasan', [PenugasanMonevController::class, 'index'])->name('penugasan.index');
         Route::post('penugasan', [PenugasanMonevController::class, 'store'])->name('penugasan.store');
         Route::delete('penugasan/{penugasan}', [PenugasanMonevController::class, 'destroy'])->name('penugasan.destroy');
+
+        Route::post('penugasan/perwakilan', [PenugasanMonevController::class, 'storePerwakilan'])->name('penugasan.perwakilan.store');
+        Route::delete('penugasan/perwakilan/{perwakilan}', [PenugasanMonevController::class, 'destroyPerwakilan'])->name('penugasan.perwakilan.destroy');
     });
 
 Route::middleware(['auth', 'role:monev'])

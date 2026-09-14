@@ -85,7 +85,7 @@
                             <tr>
                                 <th class="px-4 py-3 text-left font-medium text-gray-500">Satker</th>
                                 <th class="px-4 py-3 text-left font-medium text-gray-500">Tim Monev</th>
-                                <th class="px-4 py-3 text-right font-medium text-gray-500">Aksi</th>
+                                <th class="px-4 py-3 text-left font-medium text-gray-500">Perwakilan Satker</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -113,7 +113,59 @@
                                             <span class="text-gray-400 italic">Belum ditugaskan</span>
                                         @endforelse
                                     </td>
-                                    <td class="px-4 py-3 text-right text-gray-400">—</td>
+                                    <td class="px-4 py-3 align-top">
+                                        @php
+                                            $wakil = $perwakilans->get($satker->id, collect());
+                                            $satkerUsers = $satker->users()->where('role', 'satker')->orderBy('name')->get();
+                                        @endphp
+
+                                        @forelse ($wakil as $p)
+                                            <div class="flex items-center justify-between gap-3 py-1">
+                                                <span>
+                                                    {{ $p->urutan }}. {{ $p->user->name ?? '-' }}
+                                                </span>
+                                                <form method="POST"
+                                                      action="{{ route('admin.penugasan.perwakilan.destroy', $p) }}"
+                                                      onsubmit="return confirm('Hapus perwakilan ini?');">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-red-600 hover:text-red-800 text-xs">
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @empty
+                                            <span class="text-gray-400 italic">Belum ada perwakilan</span>
+                                        @endforelse
+
+                                        <form method="POST"
+                                              action="{{ route('admin.penugasan.perwakilan.store') }}"
+                                              class="mt-2 flex flex-wrap items-end gap-2">
+                                            @csrf
+                                            <input type="hidden" name="periode_id" value="{{ $selectedPeriode->id }}">
+                                            <input type="hidden" name="satker_id" value="{{ $satker->id }}">
+
+                                            <select name="urutan"
+                                                    class="rounded-md border-gray-300 text-xs shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                            </select>
+
+                                            <select name="user_id"
+                                                    class="rounded-md border-gray-300 text-xs shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                                @forelse ($satkerUsers as $u)
+                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                @empty
+                                                    <option value="">Belum ada user satker</option>
+                                                @endforelse
+                                            </select>
+
+                                            <button type="submit"
+                                                    class="rounded-md bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700">
+                                                Simpan
+                                            </button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PenugasanMonev;
 use App\Models\PeriodeReview;
+use App\Models\PerwakilanSatker;
 use App\Models\Satker;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -30,12 +31,18 @@ class PenugasanMonevController extends Controller
         $satkers = collect();
         $monevUsers = collect();
         $penugasans = collect();
+        $perwakilans = collect();
 
         if ($selectedPeriode) {
             $satkers = Satker::orderBy('kode_satker')->get();
             $monevUsers = User::where('role', 'monev')->orderBy('name')->get();
             $penugasans = PenugasanMonev::with(['satker', 'monevUser'])
                 ->where('periode_id', $selectedPeriode->id)
+                ->get()
+                ->groupBy('satker_id');
+            $perwakilans = PerwakilanSatker::with('user')
+                ->where('periode_id', $selectedPeriode->id)
+                ->orderBy('urutan')
                 ->get()
                 ->groupBy('satker_id');
         }
@@ -45,7 +52,8 @@ class PenugasanMonevController extends Controller
             'selectedPeriode',
             'satkers',
             'monevUsers',
-            'penugasans'
+            'penugasans',
+            'perwakilans'
         ));
     }
 
@@ -73,6 +81,61 @@ class PenugasanMonevController extends Controller
         return redirect()
             ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
             ->with('success', 'Penugasan monev berhasil ditambahkan.');
+    }
+
+    /**
+     * Store a new satker representative.
+     */
+    public function storePerwakilan(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'periode_id' => ['required', 'exists:periode_reviews,id'],
+            'satker_id' => ['required', 'exists:satkers,id'],
+            'user_id' => ['required', 'exists:users,id'],
+            'urutan' => ['required', 'integer', 'in:1,2'],
+        ]);
+
+        $user = User::findOrFail($validated['user_id']);
+
+        if ($user->role !== 'satker') {
+            return redirect()
+                ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
+                ->with('error', 'User yang dipilih bukan user Satker.');
+        }
+
+        if ((int) $user->satker_id !== (int) $validated['satker_id']) {
+            return redirect()
+                ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
+                ->with('error', 'User tersebut tidak terdaftar pada satker yang dipilih.');
+        }
+
+        PerwakilanSatker::updateOrCreate(
+            [
+                'periode_id' => $validated['periode_id'],
+                'satker_id' => $validated['satker_id'],
+                'urutan' => $validated['urutan'],
+            ],
+            [
+                'user_id' => $validated['user_id'],
+            ]
+        );
+
+        return redirect()
+            ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
+            ->with('success', 'Perwakilan satker berhasil disimpan.');
+    }
+
+    /**
+     * Remove the specified satker representative from storage.
+     */
+    public function destroyPerwakilan(PerwakilanSatker $perwakilan): RedirectResponse
+    {
+        $periodeId = $perwakilan->periode_id;
+        $perwakilan->delete();
+
+        return redirect()
+            ->route('admin.penugasan.index', ['periode_id' => $periodeId])
+            ->with('success', 'Perwakilan satker berhasil dihapus.');
     }
 
     /**

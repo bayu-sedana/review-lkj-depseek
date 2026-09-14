@@ -51,4 +51,12 @@ class Satker extends Model
     {
         return $this->hasMany(LkjSubmission::class);
     }
+
+    /**
+     * Get the representatives for this satker.
+     */
+    public function perwakilanSatker(): HasMany
+    {
+        return $this->hasMany(PerwakilanSatker::class);
+    }
 }

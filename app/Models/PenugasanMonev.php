@@ -51,4 +51,13 @@ class PenugasanMonev extends Model
     {
         return $this->belongsTo(User::class, 'monev_user_id');
     }
+
+    /**
+     * Scope the query to a given period and satker.
+     */
+    public function scopeForSatker($query, int $periodeId, int $satkerId)
+    {
+        return $query->where('periode_id', $periodeId)
+            ->where('satker_id', $satkerId);
+    }
 }

@@ -23,6 +23,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'nip',
         'email',
         'password',
         'role',
@@ -74,6 +75,14 @@ class User extends Authenticatable
     public function penugasanMonev(): HasMany
     {
         return $this->hasMany(PenugasanMonev::class, 'monev_user_id');
+    }
+
+    /**
+     * Get the satker representative assignments for this user.
+     */
+    public function perwakilanSatker(): HasMany
+    {
+        return $this->hasMany(PerwakilanSatker::class);
     }
 
     /**

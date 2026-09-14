@@ -31,14 +31,17 @@ class BeritaAcaraGeneratorService
 
         $template = new TemplateProcessor($templatePath);
 
-        $template->setValues([
-            'nama_satker' => $submission->satker->nama_satker ?? '-',
-            'kode_satker' => $submission->satker->kode_satker ?? '-',
-            'tahun_lkj' => (string) ($submission->periode->tahun_lkj ?? '-'),
-            'tahun_review' => (string) ($submission->periode->tahun_review ?? '-'),
-            'tanggal_selesai' => now()->translatedFormat('d F Y'),
-            'jumlah_indikator' => (string) $this->jumlahIndikator($submission),
-        ]);
+        $template->setValues(array_merge(
+            [
+                'nama_satker' => $submission->satker->nama_satker ?? '-',
+                'kode_satker' => $submission->satker->kode_satker ?? '-',
+                'tahun_lkj' => (string) ($submission->periode->tahun_lkj ?? '-'),
+                'tahun_review' => (string) ($submission->periode->tahun_review ?? '-'),
+                'tanggal_selesai' => now()->translatedFormat('d F Y'),
+                'jumlah_indikator' => (string) $this->jumlahIndikator($submission),
+            ],
+            $this->penandatangan($submission)
+        ));
 
         $directory = sprintf(
             'berita_acara/%s/%s',
@@ -65,6 +68,39 @@ class BeritaAcaraGeneratorService
                 'diupload_oleh' => $userId,
             ]
         );
+    }
+
+    /**
+     * Build the signature-block placeholder values for the template.
+     *
+     * @return array<string, string>
+     */
+    protected function penandatangan(LkjSubmission $submission): array
+    {
+        $monev = \App\Models\PenugasanMonev::with('monevUser')
+            ->forSatker($submission->periode_id, $submission->satker_id)
+            ->get()
+            ->pluck('monevUser')
+            ->filter()
+            ->take(2)
+            ->values();
+
+        $wakil = \App\Models\PerwakilanSatker::with('user')
+            ->where('periode_id', $submission->periode_id)
+            ->where('satker_id', $submission->satker_id)
+            ->orderBy('urutan')
+            ->take(2)
+            ->get()
+            ->values();
+
+        $values = [];
+
+        foreach ([1, 2] as $i) {
+            $values["monev_nama_{$i}"] = $monev->get($i - 1)->name ?? '';
+            $values["satker_nama_{$i}"] = $wakil->get($i - 1)->user->name ?? '';
+        }
+
+        return $values;
     }
 
     /**

@@ -30,12 +30,14 @@ class PenugasanMonevController extends Controller
 
         $satkers = collect();
         $monevUsers = collect();
+        $satkerUsers = collect();
         $penugasans = collect();
         $perwakilans = collect();
 
         if ($selectedPeriode) {
             $satkers = Satker::orderBy('kode_satker')->get();
             $monevUsers = User::where('role', 'monev')->orderBy('name')->get();
+            $satkerUsers = User::where('role', 'satker')->orderBy('name')->get();
             $penugasans = PenugasanMonev::with(['satker', 'monevUser'])
                 ->where('periode_id', $selectedPeriode->id)
                 ->get()
@@ -52,6 +54,7 @@ class PenugasanMonevController extends Controller
             'selectedPeriode',
             'satkers',
             'monevUsers',
+            'satkerUsers',
             'penugasans',
             'perwakilans'
         ));

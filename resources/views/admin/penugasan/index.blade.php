@@ -77,6 +77,52 @@
                             </button>
                         </div>
                     </form>
+
+                    <hr class="my-6 border-gray-200">
+
+                    <h3 class="text-base font-semibold text-gray-800 mb-4">Tambah Perwakilan Satker</h3>
+
+                    <form method="POST" action="{{ route('admin.penugasan.perwakilan.store') }}" class="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                        @csrf
+                        <input type="hidden" name="periode_id" value="{{ $selectedPeriode->id }}">
+
+                        <div>
+                            <label for="perwakilan_satker_id" class="block text-sm font-medium text-gray-700">Satker</label>
+                            <select id="perwakilan_satker_id" name="satker_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @foreach ($satkers as $satker)
+                                    <option value="{{ $satker->id }}">
+                                        {{ $satker->kode_satker }} — {{ $satker->nama_satker }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('satker_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label for="perwakilan_user_id" class="block text-sm font-medium text-gray-700">Perwakilan Satker</label>
+                            <select id="perwakilan_user_id" name="user_id"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
+                                @forelse ($satkerUsers as $u)
+                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                @empty
+                                    <option value="">Belum ada user role Satker</option>
+                                @endforelse
+                            </select>
+                            @error('user_id')
+                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <button type="submit"
+                                    class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
+                                Tambah Perwakilan
+                            </button>
+                        </div>
+                    </form>
                 </div>
 
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -114,10 +160,7 @@
                                         @endforelse
                                     </td>
                                     <td class="px-4 py-3 align-top">
-                                        @php
-                                            $wakil = $perwakilans->get($satker->id, collect());
-                                            $satkerUsers = $satker->users()->where('role', 'satker')->orderBy('name')->get();
-                                        @endphp
+                                        @php $wakil = $perwakilans->get($satker->id, collect()); @endphp
 
                                         @forelse ($wakil as $p)
                                             <div class="flex items-center justify-between gap-3 py-1">
@@ -137,28 +180,6 @@
                                         @empty
                                             <span class="text-gray-400 italic">Belum ada perwakilan</span>
                                         @endforelse
-
-                                        <form method="POST"
-                                              action="{{ route('admin.penugasan.perwakilan.store') }}"
-                                              class="mt-2 flex flex-wrap items-end gap-2">
-                                            @csrf
-                                            <input type="hidden" name="periode_id" value="{{ $selectedPeriode->id }}">
-                                            <input type="hidden" name="satker_id" value="{{ $satker->id }}">
-
-                                            <select name="user_id"
-                                                    class="rounded-md border-gray-300 text-xs shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                                @forelse ($satkerUsers as $u)
-                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
-                                                @empty
-                                                    <option value="">Belum ada user satker</option>
-                                                @endforelse
-                                            </select>
-
-                                            <button type="submit"
-                                                    class="rounded-md bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700">
-                                                Simpan
-                                            </button>
-                                        </form>
                                     </td>
                                 </tr>
                             @empty

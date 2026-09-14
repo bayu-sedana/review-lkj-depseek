@@ -165,7 +165,7 @@
                                         @forelse ($wakil as $p)
                                             <div class="flex items-center justify-between gap-3 py-1">
                                                 <span>
-                                                    {{ $p->urutan }}. {{ $p->user->name ?? '-' }}
+                                                    {{ $p->user->name ?? '-' }}
                                                 </span>
                                                 <form method="POST"
                                                       action="{{ route('admin.penugasan.perwakilan.destroy', $p) }}"

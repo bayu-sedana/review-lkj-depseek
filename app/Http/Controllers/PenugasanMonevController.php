@@ -92,7 +92,6 @@ class PenugasanMonevController extends Controller
             'periode_id' => ['required', 'exists:periode_reviews,id'],
             'satker_id' => ['required', 'exists:satkers,id'],
             'user_id' => ['required', 'exists:users,id'],
-            'urutan' => ['required', 'integer', 'in:1,2'],
         ]);
 
         $user = User::findOrFail($validated['user_id']);
@@ -109,16 +108,30 @@ class PenugasanMonevController extends Controller
                 ->with('error', 'User tersebut tidak terdaftar pada satker yang dipilih.');
         }
 
-        PerwakilanSatker::updateOrCreate(
-            [
-                'periode_id' => $validated['periode_id'],
-                'satker_id' => $validated['satker_id'],
-                'urutan' => $validated['urutan'],
-            ],
-            [
-                'user_id' => $validated['user_id'],
-            ]
-        );
+        $existing = PerwakilanSatker::where('periode_id', $validated['periode_id'])
+            ->where('satker_id', $validated['satker_id'])
+            ->get();
+
+        if ($existing->contains('user_id', $user->id)) {
+            return redirect()
+                ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
+                ->with('error', 'User tersebut sudah terdaftar sebagai perwakilan satker.');
+        }
+
+        if ($existing->count() >= 2) {
+            return redirect()
+                ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])
+                ->with('error', 'Maksimal 2 perwakilan satker per periode.');
+        }
+
+        $urutan = $existing->contains('urutan', 1) ? 2 : 1;
+
+        PerwakilanSatker::create([
+            'periode_id' => $validated['periode_id'],
+            'satker_id' => $validated['satker_id'],
+            'user_id' => $validated['user_id'],
+            'urutan' => $urutan,
+        ]);
 
         return redirect()
             ->route('admin.penugasan.index', ['periode_id' => $validated['periode_id']])

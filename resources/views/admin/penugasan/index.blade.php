@@ -145,12 +145,6 @@
                                             <input type="hidden" name="periode_id" value="{{ $selectedPeriode->id }}">
                                             <input type="hidden" name="satker_id" value="{{ $satker->id }}">
 
-                                            <select name="urutan"
-                                                    class="rounded-md border-gray-300 text-xs shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                            </select>
-
                                             <select name="user_id"
                                                     class="rounded-md border-gray-300 text-xs shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                                 @forelse ($satkerUsers as $u)

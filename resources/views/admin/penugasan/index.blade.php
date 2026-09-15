@@ -150,7 +150,8 @@
                                                       onsubmit="return confirm('Hapus penugasan ini?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-800 text-xs">
+                                                    <button type="submit"
+                                                            class="inline-flex items-center rounded-md border border-red-600 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
                                                         Hapus
                                                     </button>
                                                 </form>
@@ -172,7 +173,8 @@
                                                       onsubmit="return confirm('Hapus perwakilan ini?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="text-red-600 hover:text-red-800 text-xs">
+                                                    <button type="submit"
+                                                            class="inline-flex items-center rounded-md border border-red-600 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
                                                         Hapus
                                                     </button>
                                                 </form>

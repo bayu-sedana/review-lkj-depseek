@@ -74,7 +74,8 @@
                                   onsubmit="return confirm('Hapus sasaran ini beserta indikatornya?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-800 text-sm mt-6">
+                                <button type="submit"
+                                        class="inline-flex items-center rounded-md border border-red-600 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 mt-6">
                                     Hapus
                                 </button>
                             </form>
@@ -92,7 +93,8 @@
                                             <input type="text" name="indikator_kinerja"
                                                    value="{{ $indikator->indikator_kinerja }}"
                                                    class="flex-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                                            <button type="submit" class="text-gray-700 hover:text-gray-900 text-sm">
+                                            <button type="submit"
+                                                    class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
                                                 Simpan
                                             </button>
                                         </form>
@@ -101,7 +103,8 @@
                                               onsubmit="return confirm('Hapus indikator ini?');">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800 text-sm">
+                                            <button type="submit"
+                                                    class="inline-flex items-center rounded-md border border-red-600 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50">
                                                 Hapus
                                             </button>
                                         </form>

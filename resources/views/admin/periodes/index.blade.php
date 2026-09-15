@@ -42,18 +42,25 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-3">{{ $periode->penugasan_monev_count }}</td>
-                                <td class="px-4 py-3 text-right space-x-2">
+                                <td class="px-4 py-3 text-right space-x-2 whitespace-nowrap">
                                     <a href="{{ route('admin.penugasan.index', ['periode_id' => $periode->id]) }}"
-                                       class="text-gray-600 hover:text-gray-900">Penugasan</a>
+                                       class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50">
+                                        Penugasan
+                                    </a>
 
                                     <a href="{{ route('admin.periodes.edit', $periode) }}"
-                                       class="text-indigo-600 hover:text-indigo-800">Edit</a>
+                                       class="inline-flex items-center rounded-md border border-indigo-600 px-3 py-1.5 text-xs font-medium text-indigo-600 hover:bg-indigo-50">
+                                        Edit
+                                    </a>
 
                                     <form method="POST" action="{{ route('admin.periodes.destroy', $periode) }}"
                                           class="inline" onsubmit="return confirm('Hapus periode ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800">Hapus</button>
+                                        <button type="submit"
+                                                class="inline-flex items-center rounded-md border border-red-600 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50">
+                                            Hapus
+                                        </button>
                                     </form>
                                 </td>
                             </tr>

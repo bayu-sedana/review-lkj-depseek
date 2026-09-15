@@ -81,7 +81,8 @@
                                 class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
                             Perbarui
                         </button>
-                        <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-600 hover:text-gray-900">
+                        <a href="{{ route('admin.users.index') }}"
+                           class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
                             Batal
                         </a>
                     </div>

@@ -55,7 +55,7 @@
 
                 @forelse ($sasarans as $sasaran)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 space-y-4">
-                        <div class="flex items-start justify-between gap-4">
+                        <div class="flex items-end justify-between gap-4">
                             <form method="POST" action="{{ route('satker.sasaran.update', $sasaran) }}" class="flex-1 flex items-end gap-3">
                                 @csrf
                                 @method('PUT')
@@ -75,7 +75,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                        class="inline-flex items-center rounded-md border border-red-600 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 mt-6">
+                                        class="inline-flex items-center rounded-md border border-red-600 px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50">
                                     Hapus
                                 </button>
                             </form>

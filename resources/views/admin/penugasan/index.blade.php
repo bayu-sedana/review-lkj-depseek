@@ -151,7 +151,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                            class="inline-flex items-center rounded-md border border-red-600 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
+                                                            class="inline-flex items-center rounded-md border border-red-600 px-4 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
                                                         Hapus
                                                     </button>
                                                 </form>
@@ -174,7 +174,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit"
-                                                            class="inline-flex items-center rounded-md border border-red-600 px-2.5 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
+                                                            class="inline-flex items-center rounded-md border border-red-600 px-4 py-1 text-xs font-medium text-red-600 hover:bg-red-50">
                                                         Hapus
                                                     </button>
                                                 </form>

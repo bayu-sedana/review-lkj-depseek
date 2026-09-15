@@ -86,7 +86,7 @@
 
                             <ul class="space-y-2">
                                 @forelse ($sasaran->indikatorKinerja as $indikator)
-                                    <li class="flex items-start gap-3">
+                                    <li class="flex items-end gap-3">
                                         <form method="POST" action="{{ route('satker.indikator.update', $indikator) }}" class="flex-1 flex items-end gap-3">
                                             @csrf
                                             @method('PUT')
@@ -100,6 +100,7 @@
                                         </form>
 
                                         <form method="POST" action="{{ route('satker.indikator.destroy', $indikator) }}"
+                                              class="flex items-end"
                                               onsubmit="return confirm('Hapus indikator ini?');">
                                             @csrf
                                             @method('DELETE')

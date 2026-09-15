@@ -91,9 +91,11 @@
                                     <td class="px-4 py-3">{{ $dokumen->file_name }}</td>
                                     <td class="px-4 py-3">{{ $dokumen->uploader->name ?? '-' }}</td>
                                     <td class="px-4 py-3">{{ $dokumen->created_at->format('d M Y H:i') }}</td>
-                                    <td class="px-4 py-3 text-right">
+                                    <td class="px-4 py-3 text-right whitespace-nowrap">
                                         <a href="{{ route('satker.lkj.download', $dokumen) }}"
-                                           class="text-indigo-600 hover:text-indigo-800">Unduh</a>
+                                           class="inline-flex items-center rounded-md border border-indigo-600 px-3 py-1.5 text-xs font-medium text-indigo-600 hover:bg-indigo-50">
+                                            Unduh
+                                        </a>
                                     </td>
                                 </tr>
                             @empty

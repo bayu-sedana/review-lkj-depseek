@@ -32,13 +32,14 @@
                                 <td class="px-4 py-3">{{ $satker->users_count }}</td>
                                 <td class="px-4 py-3 text-right space-x-2">
                                     <a href="{{ route('admin.satkers.edit', $satker) }}"
-                                       class="text-indigo-600 hover:text-indigo-800">Edit</a>
+                                       class="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50">Edit</a>
 
                                     <form method="POST" action="{{ route('admin.satkers.destroy', $satker) }}"
                                           class="inline" onsubmit="return confirm('Hapus satker ini?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-800">Hapus</button>
+                                        <button type="submit"
+                                                class="inline-flex items-center rounded-md border border-red-300 bg-white px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50">Hapus</button>
                                     </form>
                                 </td>
                             </tr>

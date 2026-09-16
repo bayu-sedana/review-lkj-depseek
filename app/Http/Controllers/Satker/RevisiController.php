@@ -24,6 +24,8 @@ class RevisiController extends Controller
 
         $submission = null;
         $dokumen = null;
+        $dokumenRevisi = null;
+        $sudahUploadRevisi = false;
         $hasilReviews = collect();
         $capaianKinerjas = collect();
         $aspek1 = collect();
@@ -40,6 +42,13 @@ class RevisiController extends Controller
             $dokumen = $submission?->dokumenTerakhir();
 
             if ($dokumen) {
+                $dokumenRevisi = $submission->dokumens()
+                    ->where('versi', '>', $dokumen->versi)
+                    ->orderByDesc('versi')
+                    ->first();
+
+                $sudahUploadRevisi = $dokumenRevisi !== null;
+
                 $hasilReviews = HasilReview::with(['rubrik', 'indikatorKinerja'])
                     ->where('lkj_dokumen_id', $dokumen->id)
                     ->where('status', 'Belum Sesuai')
@@ -75,6 +84,8 @@ class RevisiController extends Controller
             'periode',
             'submission',
             'dokumen',
+            'dokumenRevisi',
+            'sudahUploadRevisi',
             'hasilReviews',
             'capaianKinerjas',
             'aspek1',
@@ -95,6 +106,25 @@ class RevisiController extends Controller
             return redirect()
                 ->route('satker.revisi.index')
                 ->with('error', 'Akun Anda belum terhubung ke Satker manapun.');
+        }
+
+        $periode = $this->resolvePeriode($request);
+
+        $submission = $periode
+            ? LkjSubmission::where('satker_id', $satker->id)
+                ->where('periode_id', $periode->id)
+                ->first()
+            : null;
+
+        $dokumen = $submission?->dokumenTerakhir();
+
+        $sudahUploadRevisi = $dokumen
+            && $submission->dokumens()->where('versi', '>', $dokumen->versi)->exists();
+
+        if (! $sudahUploadRevisi) {
+            return redirect()
+                ->route('satker.revisi.index')
+                ->with('error', 'Unggah dokumen LKj revisi terlebih dahulu sebelum mengisi tanggapan perbaikan.');
         }
 
         $validated = $request->validate([

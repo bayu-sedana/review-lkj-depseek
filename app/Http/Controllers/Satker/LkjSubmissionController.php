@@ -62,12 +62,6 @@ class LkjSubmissionController extends Controller
             ]
         );
 
-        if (! $this->semuaSudahDitanggapi($submission)) {
-            return redirect()
-                ->route('satker.revisi.index')
-                ->with('error', 'Anda harus mengisi seluruh tanggapan perbaikan sebelum mengunggah dokumen revisi.');
-        }
-
         $versi = $submission->versiBerikutnya();
 
         $file = $validated['file'];

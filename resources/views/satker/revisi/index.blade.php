@@ -84,9 +84,9 @@
 
                             <div class="p-6">
                                 <div x-show="tab === 'aspek1'" x-cloak>
-                                    @forelse ($aspek1 as $index => $hasil)
+                                    @forelse ($aspek1 as $hasil)
                                         <div class="border border-gray-200 rounded-md p-4 mb-3">
-                                            <input type="hidden" name="hasil_reviews[{{ $index }}][id]" value="{{ $hasil->id }}">
+                                            <input type="hidden" name="hasil_reviews[{{ $hasil->id }}][id]" value="{{ $hasil->id }}">
 
                                             <p class="text-sm font-medium text-gray-800">
                                                 {{ $hasil->rubrik->bagian_laporan ?? '-' }}
@@ -116,7 +116,7 @@
                                                 <label class="block text-sm font-medium text-gray-700">
                                                     Tanggapan Perbaikan <span class="text-red-600">*</span>
                                                 </label>
-                                                <textarea name="hasil_reviews[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                <textarea name="hasil_reviews[{{ $hasil->id }}][tanggapan_perbaikan_satker]" rows="2"
                                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $hasil->tanggapan_perbaikan_satker }}</textarea>
                                             </div>
                                         </div>
@@ -128,9 +128,9 @@
                                 </div>
 
                                 <div x-show="tab === 'aspek2'" x-cloak>
-                                    @forelse ($capaianKinerjas as $index => $capaian)
+                                    @forelse ($capaianKinerjas as $capaian)
                                         <div class="border border-gray-200 rounded-md p-4 mb-3">
-                                            <input type="hidden" name="capaian_kinerjas[{{ $index }}][id]" value="{{ $capaian->id }}">
+                                            <input type="hidden" name="capaian_kinerjas[{{ $capaian->id }}][id]" value="{{ $capaian->id }}">
 
                                             <p class="text-sm font-medium text-gray-800">
                                                 {{ $capaian->indikatorKinerja->indikator_kinerja ?? '-' }}
@@ -155,7 +155,7 @@
                                                 <label class="block text-sm font-medium text-gray-700">
                                                     Tanggapan Perbaikan <span class="text-red-600">*</span>
                                                 </label>
-                                                <textarea name="capaian_kinerjas[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                <textarea name="capaian_kinerjas[{{ $capaian->id }}][tanggapan_perbaikan_satker]" rows="2"
                                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $capaian->tanggapan_perbaikan_satker }}</textarea>
                                             </div>
                                         </div>
@@ -167,9 +167,9 @@
                                 </div>
 
                                 <div x-show="tab === 'aspek3'" x-cloak>
-                                    @forelse ($aspek3 as $index => $hasil)
+                                    @forelse ($aspek3 as $hasil)
                                         <div class="border border-gray-200 rounded-md p-4 mb-3">
-                                            <input type="hidden" name="hasil_reviews[{{ $index }}][id]" value="{{ $hasil->id }}">
+                                            <input type="hidden" name="hasil_reviews[{{ $hasil->id }}][id]" value="{{ $hasil->id }}">
 
                                             <p class="text-sm font-medium text-gray-800">
                                                 {{ $hasil->rubrik->bagian_laporan ?? '-' }}
@@ -199,7 +199,7 @@
                                                 <label class="block text-sm font-medium text-gray-700">
                                                     Tanggapan Perbaikan <span class="text-red-600">*</span>
                                                 </label>
-                                                <textarea name="hasil_reviews[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                <textarea name="hasil_reviews[{{ $hasil->id }}][tanggapan_perbaikan_satker]" rows="2"
                                                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $hasil->tanggapan_perbaikan_satker }}</textarea>
                                             </div>
                                         </div>

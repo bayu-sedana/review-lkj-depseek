@@ -52,11 +52,11 @@ class RevisiController extends Controller
                     ->get();
 
                 $aspek1 = $hasilReviews->filter(
-                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'Aspek 1'
+                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'format_pelaporan'
                 )->values();
 
                 $aspek3 = $hasilReviews->filter(
-                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'Aspek 3'
+                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'pengungkapan_informasi'
                 )->values();
 
                 $jumlahPerbaikan = $hasilReviews->count() + $capaianKinerjas->count();

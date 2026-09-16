@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Satker;
 
 use App\Http\Controllers\Controller;
-use App\Models\HasilReview;
 use App\Models\LkjSubmission;
 use App\Models\PeriodeReview;
-use App\Models\ReviewCapaianKinerja;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -91,40 +89,6 @@ class LkjSubmissionController extends Controller
             ->with('success', "Dokumen LKj versi {$versi} berhasil diunggah.");
     }
 
-    /**
-     * Determine whether all revision items have been responded to by the satker.
-     */
-    private function semuaSudahDitanggapi(LkjSubmission $submission): bool
-    {
-        $dokumen = $submission->dokumenTerakhir();
-
-        if (! $dokumen) {
-            return true;
-        }
-
-        $belumDitanggapiHasil = HasilReview::where('lkj_dokumen_id', $dokumen->id)
-            ->where('status', 'Belum Sesuai')
-            ->where(function ($query) {
-                $query->whereNull('tanggapan_perbaikan_satker')
-                    ->orWhere('tanggapan_perbaikan_satker', '');
-            })
-            ->exists();
-
-        if ($belumDitanggapiHasil) {
-            return false;
-        }
-
-        $belumDitanggapiCapaian = ReviewCapaianKinerja::where('lkj_dokumen_id', $dokumen->id)
-            ->where('is_sinkron', false)
-            ->whereNotNull('nilai_exec_summary')
-            ->where(function ($query) {
-                $query->whereNull('tanggapan_perbaikan_satker')
-                    ->orWhere('tanggapan_perbaikan_satker', '');
-            })
-            ->exists();
-
-        return ! $belumDitanggapiCapaian;
-    }
 
     /**
      * Download the specified LKj document.

@@ -54,20 +54,6 @@
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 text-center text-green-600">
                         Tidak ada item yang perlu diperbaiki. Dokumen LKj Anda sudah sesuai.
                     </div>
-                @elseif (! $sudahUploadRevisi)
-                    <div class="bg-yellow-50 border border-yellow-200 overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <p class="font-semibold text-yellow-800">
-                            Unggah dokumen LKj revisi terlebih dahulu
-                        </p>
-                        <p class="mt-1 text-sm text-yellow-700">
-                            Anda harus mengunggah dokumen LKj yang sudah diperbaiki sebelum dapat mengisi
-                            tanggapan perbaikan. Setelah dokumen revisi diunggah, form tanggapan akan tersedia.
-                        </p>
-                        <a href="{{ route('satker.lkj.index') }}"
-                           class="mt-4 inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
-                            Unggah Dokumen LKj
-                        </a>
-                    </div>
                 @else
                     <form method="POST" action="{{ route('satker.revisi.store') }}" class="space-y-6" x-data="{ tab: 'aspek1' }">
                         @csrf
@@ -226,7 +212,14 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-end">
+                        <div class="flex items-center justify-between">
+                            <p class="text-sm text-gray-500">
+                                Setelah seluruh tanggapan disimpan, unggah dokumen LKj versi berikutnya
+                                melalui halaman
+                                <a href="{{ route('satker.lkj.index') }}" class="text-indigo-600 hover:text-indigo-800 underline">
+                                    Unggah LKj
+                                </a>.
+                            </p>
                             <button type="submit"
                                     class="inline-flex items-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700">
                                 Simpan Tanggapan

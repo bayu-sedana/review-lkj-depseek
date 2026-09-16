@@ -42,12 +42,9 @@ class RevisiController extends Controller
             $dokumen = $submission?->dokumenTerakhir();
 
             if ($dokumen) {
-                $dokumenRevisi = $submission->dokumens()
+                $sudahUploadRevisi = $submission->dokumens()
                     ->where('versi', '>', $dokumen->versi)
-                    ->orderByDesc('versi')
-                    ->first();
-
-                $sudahUploadRevisi = $dokumenRevisi !== null;
+                    ->exists();
 
                 $hasilReviews = HasilReview::with(['rubrik', 'indikatorKinerja'])
                     ->where('lkj_dokumen_id', $dokumen->id)
@@ -118,13 +115,10 @@ class RevisiController extends Controller
 
         $dokumen = $submission?->dokumenTerakhir();
 
-        $sudahUploadRevisi = $dokumen
-            && $submission->dokumens()->where('versi', '>', $dokumen->versi)->exists();
-
-        if (! $sudahUploadRevisi) {
+        if (! $dokumen) {
             return redirect()
                 ->route('satker.revisi.index')
-                ->with('error', 'Unggah dokumen LKj revisi terlebih dahulu sebelum mengisi tanggapan perbaikan.');
+                ->with('error', 'Anda belum mengunggah dokumen LKj pada periode ini.');
         }
 
         $validated = $request->validate([

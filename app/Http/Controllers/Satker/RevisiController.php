@@ -26,6 +26,8 @@ class RevisiController extends Controller
         $dokumen = null;
         $hasilReviews = collect();
         $capaianKinerjas = collect();
+        $aspek1 = collect();
+        $aspek3 = collect();
         $jumlahPerbaikan = 0;
         $jumlahBelumDitanggapi = 0;
 
@@ -49,6 +51,14 @@ class RevisiController extends Controller
                     ->whereNotNull('nilai_exec_summary')
                     ->get();
 
+                $aspek1 = $hasilReviews->filter(
+                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'Aspek 1'
+                )->values();
+
+                $aspek3 = $hasilReviews->filter(
+                    fn (HasilReview $item) => ($item->rubrik->aspek ?? null) === 'Aspek 3'
+                )->values();
+
                 $jumlahPerbaikan = $hasilReviews->count() + $capaianKinerjas->count();
 
                 $jumlahBelumDitanggapi = $hasilReviews
@@ -67,6 +77,8 @@ class RevisiController extends Controller
             'dokumen',
             'hasilReviews',
             'capaianKinerjas',
+            'aspek1',
+            'aspek3',
             'jumlahPerbaikan',
             'jumlahBelumDitanggapi'
         ));

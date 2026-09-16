@@ -55,95 +55,162 @@
                         Tidak ada item yang perlu diperbaiki. Dokumen LKj Anda sudah sesuai.
                     </div>
                 @else
-                    <form method="POST" action="{{ route('satker.revisi.store') }}" class="space-y-6">
+                    <form method="POST" action="{{ route('satker.revisi.store') }}" class="space-y-6" x-data="{ tab: 'aspek1' }">
                         @csrf
 
-                        @if ($hasilReviews->isNotEmpty())
-                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                                <h3 class="text-base font-semibold text-gray-800 mb-4">
-                                    Aspek 1 &amp; 3: Format &amp; Pengungkapan
-                                </h3>
-
-                                @foreach ($hasilReviews as $index => $hasil)
-                                    <div class="border border-gray-200 rounded-md p-4 mb-3">
-                                        <input type="hidden" name="hasil_reviews[{{ $index }}][id]" value="{{ $hasil->id }}">
-
-                                        <p class="text-sm font-medium text-gray-800">
-                                            {{ $hasil->rubrik->bagian_laporan ?? '-' }}
-                                        </p>
-
-                                        @if ($hasil->indikatorKinerja)
-                                            <p class="text-xs text-gray-500 mt-1">
-                                                Indikator: {{ $hasil->indikatorKinerja->indikator_kinerja }}
-                                            </p>
-                                        @endif
-
-                                        @if ($hasil->uraian_hasil_review)
-                                            <p class="text-sm text-gray-600 mt-2">
-                                                <span class="font-medium">Uraian Hasil Review:</span>
-                                                {{ $hasil->uraian_hasil_review }}
-                                            </p>
-                                        @endif
-
-                                        <div class="mt-2 rounded-md bg-red-50 border border-red-200 p-3">
-                                            <p class="text-sm text-red-800">
-                                                <span class="font-medium">Catatan Perbaikan:</span>
-                                                {{ $hasil->catatan_perbaikan ?? '-' }}
-                                            </p>
-                                        </div>
-
-                                        <div class="mt-3">
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Tanggapan Perbaikan <span class="text-red-600">*</span>
-                                            </label>
-                                            <textarea name="hasil_reviews[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $hasil->tanggapan_perbaikan_satker }}</textarea>
-                                        </div>
-                                    </div>
-                                @endforeach
+                        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                            <div class="border-b border-gray-200">
+                                <nav class="flex -mb-px" aria-label="Tabs">
+                                    <button type="button" @click="tab = 'aspek1'"
+                                            :class="tab === 'aspek1' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2">
+                                        Aspek 1: Format
+                                        <span class="ml-1 text-xs text-gray-400">({{ $aspek1->count() }})</span>
+                                    </button>
+                                    <button type="button" @click="tab = 'aspek2'"
+                                            :class="tab === 'aspek2' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2">
+                                        Aspek 2: Capaian Kinerja
+                                        <span class="ml-1 text-xs text-gray-400">({{ $capaianKinerjas->count() }})</span>
+                                    </button>
+                                    <button type="button" @click="tab = 'aspek3'"
+                                            :class="tab === 'aspek3' ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                                            class="flex-1 py-3 px-4 text-center text-sm font-medium border-b-2">
+                                        Aspek 3: Pengungkapan
+                                        <span class="ml-1 text-xs text-gray-400">({{ $aspek3->count() }})</span>
+                                    </button>
+                                </nav>
                             </div>
-                        @endif
 
-                        @if ($capaianKinerjas->isNotEmpty())
-                            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                                <h3 class="text-base font-semibold text-gray-800 mb-4">
-                                    Aspek 2: Capaian Kinerja (Belum Sinkron)
-                                </h3>
+                            <div class="p-6">
+                                <div x-show="tab === 'aspek1'" x-cloak>
+                                    @forelse ($aspek1 as $index => $hasil)
+                                        <div class="border border-gray-200 rounded-md p-4 mb-3">
+                                            <input type="hidden" name="hasil_reviews[{{ $index }}][id]" value="{{ $hasil->id }}">
 
-                                @foreach ($capaianKinerjas as $index => $capaian)
-                                    <div class="border border-gray-200 rounded-md p-4 mb-3">
-                                        <input type="hidden" name="capaian_kinerjas[{{ $index }}][id]" value="{{ $capaian->id }}">
-
-                                        <p class="text-sm font-medium text-gray-800">
-                                            {{ $capaian->indikatorKinerja->indikator_kinerja ?? '-' }}
-                                        </p>
-
-                                        <div class="mt-2 grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-gray-600">
-                                            <div>Exec Summary: <strong>{{ $capaian->nilai_exec_summary ?? '-' }}</strong></div>
-                                            <div>Bab III: <strong>{{ $capaian->nilai_bab_3 ?? '-' }}</strong></div>
-                                            <div>Bab IV: <strong>{{ $capaian->nilai_bab_4 ?? '-' }}</strong></div>
-                                            <div>Aplikasi: <strong>{{ $capaian->nilai_aplikasi_kinerjaku ?? '-' }}</strong></div>
-                                            <div>Data Dukung: <strong>{{ $capaian->nilai_data_dukung ?? '-' }}</strong></div>
-                                        </div>
-
-                                        <div class="mt-2 rounded-md bg-red-50 border border-red-200 p-3">
-                                            <p class="text-sm text-red-800">
-                                                <span class="font-medium">Catatan Perbaikan:</span>
-                                                {{ $capaian->catatan_perbaikan ?? '-' }}
+                                            <p class="text-sm font-medium text-gray-800">
+                                                {{ $hasil->rubrik->bagian_laporan ?? '-' }}
                                             </p>
-                                        </div>
 
-                                        <div class="mt-3">
-                                            <label class="block text-sm font-medium text-gray-700">
-                                                Tanggapan Perbaikan <span class="text-red-600">*</span>
-                                            </label>
-                                            <textarea name="capaian_kinerjas[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
-                                                      class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $capaian->tanggapan_perbaikan_satker }}</textarea>
+                                            @if ($hasil->indikatorKinerja)
+                                                <p class="text-xs text-gray-500 mt-1">
+                                                    Indikator: {{ $hasil->indikatorKinerja->indikator_kinerja }}
+                                                </p>
+                                            @endif
+
+                                            @if ($hasil->uraian_hasil_review)
+                                                <p class="text-sm text-gray-600 mt-2">
+                                                    <span class="font-medium">Uraian Hasil Review:</span>
+                                                    {{ $hasil->uraian_hasil_review }}
+                                                </p>
+                                            @endif
+
+                                            <div class="mt-2 rounded-md bg-red-50 border border-red-200 p-3">
+                                                <p class="text-sm text-red-800">
+                                                    <span class="font-medium">Catatan Perbaikan:</span>
+                                                    {{ $hasil->catatan_perbaikan ?? '-' }}
+                                                </p>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <label class="block text-sm font-medium text-gray-700">
+                                                    Tanggapan Perbaikan <span class="text-red-600">*</span>
+                                                </label>
+                                                <textarea name="hasil_reviews[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $hasil->tanggapan_perbaikan_satker }}</textarea>
+                                            </div>
                                         </div>
-                                    </div>
-                                @endforeach
+                                    @empty
+                                        <p class="text-center text-sm text-gray-500">
+                                            Tidak ada item perbaikan pada aspek ini.
+                                        </p>
+                                    @endforelse
+                                </div>
+
+                                <div x-show="tab === 'aspek2'" x-cloak>
+                                    @forelse ($capaianKinerjas as $index => $capaian)
+                                        <div class="border border-gray-200 rounded-md p-4 mb-3">
+                                            <input type="hidden" name="capaian_kinerjas[{{ $index }}][id]" value="{{ $capaian->id }}">
+
+                                            <p class="text-sm font-medium text-gray-800">
+                                                {{ $capaian->indikatorKinerja->indikator_kinerja ?? '-' }}
+                                            </p>
+
+                                            <div class="mt-2 grid grid-cols-2 md:grid-cols-5 gap-2 text-xs text-gray-600">
+                                                <div>Exec Summary: <strong>{{ $capaian->nilai_exec_summary ?? '-' }}</strong></div>
+                                                <div>Bab III: <strong>{{ $capaian->nilai_bab_3 ?? '-' }}</strong></div>
+                                                <div>Bab IV: <strong>{{ $capaian->nilai_bab_4 ?? '-' }}</strong></div>
+                                                <div>Aplikasi: <strong>{{ $capaian->nilai_aplikasi_kinerjaku ?? '-' }}</strong></div>
+                                                <div>Data Dukung: <strong>{{ $capaian->nilai_data_dukung ?? '-' }}</strong></div>
+                                            </div>
+
+                                            <div class="mt-2 rounded-md bg-red-50 border border-red-200 p-3">
+                                                <p class="text-sm text-red-800">
+                                                    <span class="font-medium">Catatan Perbaikan:</span>
+                                                    {{ $capaian->catatan_perbaikan ?? '-' }}
+                                                </p>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <label class="block text-sm font-medium text-gray-700">
+                                                    Tanggapan Perbaikan <span class="text-red-600">*</span>
+                                                </label>
+                                                <textarea name="capaian_kinerjas[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $capaian->tanggapan_perbaikan_satker }}</textarea>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <p class="text-center text-sm text-gray-500">
+                                            Tidak ada item perbaikan pada aspek ini.
+                                        </p>
+                                    @endforelse
+                                </div>
+
+                                <div x-show="tab === 'aspek3'" x-cloak>
+                                    @forelse ($aspek3 as $index => $hasil)
+                                        <div class="border border-gray-200 rounded-md p-4 mb-3">
+                                            <input type="hidden" name="hasil_reviews[{{ $index }}][id]" value="{{ $hasil->id }}">
+
+                                            <p class="text-sm font-medium text-gray-800">
+                                                {{ $hasil->rubrik->bagian_laporan ?? '-' }}
+                                            </p>
+
+                                            @if ($hasil->indikatorKinerja)
+                                                <p class="text-xs text-gray-500 mt-1">
+                                                    Indikator: {{ $hasil->indikatorKinerja->indikator_kinerja }}
+                                                </p>
+                                            @endif
+
+                                            @if ($hasil->uraian_hasil_review)
+                                                <p class="text-sm text-gray-600 mt-2">
+                                                    <span class="font-medium">Uraian Hasil Review:</span>
+                                                    {{ $hasil->uraian_hasil_review }}
+                                                </p>
+                                            @endif
+
+                                            <div class="mt-2 rounded-md bg-red-50 border border-red-200 p-3">
+                                                <p class="text-sm text-red-800">
+                                                    <span class="font-medium">Catatan Perbaikan:</span>
+                                                    {{ $hasil->catatan_perbaikan ?? '-' }}
+                                                </p>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <label class="block text-sm font-medium text-gray-700">
+                                                    Tanggapan Perbaikan <span class="text-red-600">*</span>
+                                                </label>
+                                                <textarea name="hasil_reviews[{{ $index }}][tanggapan_perbaikan_satker]" rows="2"
+                                                          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">{{ $hasil->tanggapan_perbaikan_satker }}</textarea>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <p class="text-center text-sm text-gray-500">
+                                            Tidak ada item perbaikan pada aspek ini.
+                                        </p>
+                                    @endforelse
+                                </div>
                             </div>
-                        @endif
+                        </div>
 
                         <div class="flex justify-end">
                             <button type="submit"
